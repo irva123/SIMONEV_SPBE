@@ -18,9 +18,13 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
+        'username',
         'password',
+        'nama_lengkap',
+        'nip', 
+        'email',
+        'no_hp'
+        
     ];
 
     /**
@@ -41,4 +45,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function progress()
+    {
+        return $this->hasMany(Space::class, 'id_users');
+    }
+
+    public function periode()
+    {
+        return $this->hasMany(Space::class, 'id_users');
+    }
 }
