@@ -39,7 +39,7 @@
                         <td>{{ $periode->tahun}}</td>
                         <td>{{ $periode->mulai}}</td>
                         <td>{{ $periode->selesai}}</td>
-                        <td><label class="label {{ ($periode->status == 'aktif') ? 'badge badge-success' : 'badge badge-danger' }}">{{ ($periode->status == 'aktif') ? 'Aktif' : 'Tidak Aktif' }}</label></td>
+                        <td><label class="label {{ ($periode->status == '1') ? 'badge badge-success' : 'badge badge-danger' }}">{{ ($periode->status == '1') ? 'Aktif' : 'Tidak Aktif' }}</label></td>
                         <td>
                         <form action="{{ route('periode.destroy', $periode->id) }}" method="POST"  data-bs-toggle="tooltip" >
                         @method('DELETE')

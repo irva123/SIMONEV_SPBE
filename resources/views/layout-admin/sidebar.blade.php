@@ -20,14 +20,14 @@
 
   <li class="nav-item">
     <a class="nav-link" href="/periode">
-      <i class="fas fa-fw fa-tachometer-alt"></i>
+      <i class="fa fa-calendar"></i>
       <span>Periode</span></a>
   </li>
 
 
   <li class="nav-item">
     <a class="nav-link" href="/progress">
-      <i class="fas fa-fw fa-tachometer-alt"></i>
+      <i class="fa fa-calendar"></i>
       <span>Progress</span></a>
   </li>
 

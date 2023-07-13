@@ -56,22 +56,19 @@ class PeriodeController extends Controller
 
         //data insert isian utama
         $dataInsert = [
-            'id_periode' => Auth::id(),
+            //'id_periode' => Auth::id(),
             'id_users' => Auth::id(),
             'tahun' => $request->input('tahun'),
             'mulai' => $request->input('mulai'),
             'selesai' => $request->input('selesai'),
             'status' => $request->input('status'),
         ];
-
-        if($request->input('id')) {
-            $periode = PerideModel::where('id', $request->input('id')) ->update($dataInsert);
-        }else{
-            $periode = PeriodeModel::create (
-                $dataInsert
-            );
+        if($request->input('status')=='1'){
+            PeriodeModel::where('status', '1')->update(['status'=>'0']);
         }
-        return redirect()->route('periode.index',['tahun'=>$request->input('tahun')])->with('success', 'Data berhasil disimpan');
+        $periode = PeriodeModel::create ($dataInsert);
+        
+        return redirect()->route('periode.index')->with('success', 'Data berhasil disimpan');
 
     }
 
@@ -107,9 +104,32 @@ class PeriodeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(UpdatePeriodeRequest $request, PeriodeModel $periode)
-    {   
-    $data=$request->all();
-    $periode->update($data);
+    {  
+
+    // $data=$request->all();
+
+    $arrayValidation = [
+        'tahun' => 'required|integer',
+        'mulai' => 'required|date_format:Y-m-d\TH:i',
+        'selesai' => 'required|date_format:Y-m-d\TH:i',
+        'status' => 'required|String',
+    ];
+
+    $validateData = $request->validate($arrayValidation);
+
+    //data insert isian utama
+    $dataUpdate = [
+        //'id_periode' => Auth::id(),
+        'id_users' => Auth::id(),
+        'tahun' => $request->input('tahun'),
+        'mulai' => $request->input('mulai'),
+        'selesai' => $request->input('selesai'),
+        'status' => $request->input('status'),
+    ];
+    if($request->input('status')=='1'){
+        PeriodeModel::where('status', '1')->update(['status'=>'0']);
+    }
+    $periode->update($dataUpdate);
     return redirect()->route('periode.index')->with('success', 'data berhasil disimpan!');
     
     }

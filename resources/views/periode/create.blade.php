@@ -35,9 +35,13 @@
                 
                 </div>
 
-                <label for="status" class="form-label">Status</label>
-                    <input type="text" class="form-control @error('status') is-invalid @enderror" id="status" 
-                    name="status" required autofocus value = "{{ old('status') }}">
+                <div class="form-group">
+                <label for="status">Status</label>
+                <select class="custom-select" id="status" name="status">
+                <option value='1'>Aktif</option>
+                <option value='0'>Tidak Aktif</option>
+                </select>
+                </div>
                
             <!-- <div class="form-group">
             <label for="status" >Status</label>

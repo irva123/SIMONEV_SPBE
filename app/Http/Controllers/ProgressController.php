@@ -9,6 +9,7 @@ use App\Models\ProgressModel;
 use App\Models\User;
 use App\Http\Requests\StoreProgressRequest;
 use App\Http\Requests\UpdateProgressRequest;
+use Illuminate\Support\Facades\Auth;
 
 class ProgressController extends Controller
 {
@@ -42,13 +43,34 @@ class ProgressController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreProgressRequest $request)
+    public function store(Request $request)
     {
-        $data=$request->all();
-        ProgressModel::create($data); 
- 
-        // if true, redirect to index 
-        return redirect('/progress') ->with('success', 'Add data success!');
+        $arrayValidation = [
+            'nama_progress' => 'required|String',
+            'mulai' => 'required|date_format:Y-m-d\TH:i',
+            'selesai' => 'required|date_format:Y-m-d\TH:i',
+        ];
+
+        $validateData = $request->validate($arrayValidation);
+
+        //data insert isian utama
+        $dataInsert = [
+            'id_periode' => Auth::id(),
+            'id_users' => Auth::id(),
+            'nama_progress' => $request->input('nama_progress'),
+            'mulai' => $request->input('mulai'),
+            'selesai' => $request->input('selesai'),
+        ];
+
+        if($request->input('id')) {
+            $progress = ProgressModel::where('id', $request->input('id')) ->update($dataInsert);
+        }else{
+            $progress = ProgressModel::create (
+                $dataInsert
+            );
+        }
+        return redirect()->route('progress.index',['nama_progress'=>$request->input('nama_progress')])->with('success', 'Data berhasil disimpan');
+
     }
     
 
@@ -69,9 +91,10 @@ class ProgressController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(ProgressModel $progress)
     {
-        //
+        $users = User::get();
+        return view('progress.edit',compact(['users', 'progress']));
     }
 
     /**
@@ -81,9 +104,11 @@ class ProgressController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateProgressRequest $request, ProgressModel $progress)
     {
-        //
+        $data=$request->all();
+    $progress->update($data);
+    return redirect()->route('progress.index')->with('success', 'data berhasil disimpan!');
     }
 
     /**
@@ -92,8 +117,9 @@ class ProgressController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(ProgressModel $progress)
     {
-        //
+        $progress->delete($progress->id);
+        return redirect()->route('progress.index')->with('success', 'data berhasil dihapus!');
     }
 }
