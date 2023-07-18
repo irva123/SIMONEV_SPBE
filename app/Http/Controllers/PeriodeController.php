@@ -10,6 +10,7 @@ use App\Http\Requests\StorePeriodeRequest;
 use App\Http\Requests\UpdatePeriodeRequest;
 use Illuminate\Support\Facades\Auth;
 
+
 class PeriodeController extends Controller
 {
     /**
@@ -19,9 +20,11 @@ class PeriodeController extends Controller
      */
     public function index(Request $request)
     {
+        
         $pagination = 10;
-        $periode = PeriodeModel::OrderBy('created_at', 'desc')->paginate($pagination);
-        $periode = PeriodeModel::get();
+        // $periode = periodeModel::all()->OrderBy('tahun', 'asc');
+        $periode = PeriodeModel::OrderBy('tahun', 'asc')->paginate($pagination);
+        $periode = PeriodeModel::OrderBy('tahun', 'asc')->get();
         return view('periode.index', ['periode'=>$periode])->with('i', ($request->input('page',1)-1)* $pagination);
     }
 

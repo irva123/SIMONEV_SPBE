@@ -36,7 +36,7 @@
                 @foreach ($periode as $periode)
                     <tr>
                         <td>{{ ++$i }}</td>
-                        <td>{{ $periode->tahun}}</td>
+                        <td>{{ $periode->tahun }}</td>
                         <td>{{ $periode->mulai}}</td>
                         <td>{{ $periode->selesai}}</td>
                         <td><label class="label {{ ($periode->status == '1') ? 'badge badge-success' : 'badge badge-danger' }}">{{ ($periode->status == '1') ? 'Aktif' : 'Tidak Aktif' }}</label></td>

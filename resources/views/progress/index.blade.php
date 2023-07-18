@@ -35,9 +35,10 @@
                 @if ($progress->count() > 0)
                 @foreach ($progress as $progress)
                     <tr>
+                    
                         <td>{{ ++$i }}</td>
                         <td>{{ $progress->nama_progress}}</td>
-                        <td>{{ $progress->periode->tahun}}</td>
+                        <td>{{ ($progress->periode->status == '1') ? $progress->periode->tahun : '' }}</td>
                         <td>{{ $progress->mulai}}</td>
                         <td>{{ $progress->selesai}}</td>
                         <td>

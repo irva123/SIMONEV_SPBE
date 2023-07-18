@@ -10,9 +10,11 @@ use App\Models\User;
 use App\Http\Requests\StoreProgressRequest;
 use App\Http\Requests\UpdateProgressRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ProgressController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -21,8 +23,12 @@ class ProgressController extends Controller
     public function index(Request $request)
     {
         $pagination = 10;
-        $progress = ProgressModel::OrderBy('created_at', 'desc')->paginate($pagination);
-        $progress = ProgressModel::get();
+        //$progress = ProgressModel::OrderBy('created_at', 'desc')->paginate($pagination);
+        //$progress = ProgressModel::Join('periode', 'progress.id_periode', '=', 'periode.id')->where('periode.status', '1')->OrderBy('created_at', 'desc')->paginate($pagination);
+        $progress = ProgressModel::Join('periode', 'progress.id_periode', '=', 'periode.id')->where('periode.status', '1')->OrderBy('progress.created_at', 'desc')->paginate($pagination);
+        //$progress = DB::table('progress')->join('periode', 'progress.id_periode', '=', 'periode.id')->where('periode.status', '1')->get();
+      
+        //$progress = ProgressModel::get();
         return view('progress.index', ['progress'=>$progress])->with('i', ($request->input('page',1)-1)* $pagination);
     }
 
@@ -50,25 +56,22 @@ class ProgressController extends Controller
             'mulai' => 'required|date_format:Y-m-d\TH:i',
             'selesai' => 'required|date_format:Y-m-d\TH:i',
         ];
-
+        
         $validateData = $request->validate($arrayValidation);
-
+        $periode_aktif = DB::table('periode')->where('status', '1')->value('id');
+       
+        //$periodeAktif = PeriodeModel::with('periode')->where('status', '"1"')->get();
+        
         //data insert isian utama
         $dataInsert = [
-            'id_periode' => Auth::id(),
+            'id_periode' => $periode_aktif,
             'id_users' => Auth::id(),
             'nama_progress' => $request->input('nama_progress'),
             'mulai' => $request->input('mulai'),
             'selesai' => $request->input('selesai'),
         ];
-
-        if($request->input('id')) {
-            $progress = ProgressModel::where('id', $request->input('id')) ->update($dataInsert);
-        }else{
-            $progress = ProgressModel::create (
-                $dataInsert
-            );
-        }
+        
+        $progress = ProgressModel::create ( $dataInsert);
         return redirect()->route('progress.index',['nama_progress'=>$request->input('nama_progress')])->with('success', 'Data berhasil disimpan');
 
     }
@@ -106,9 +109,29 @@ class ProgressController extends Controller
      */
     public function update(UpdateProgressRequest $request, ProgressModel $progress)
     {
-        $data=$request->all();
-    $progress->update($data);
-    return redirect()->route('progress.index')->with('success', 'data berhasil disimpan!');
+        //$data=$request->all();
+        $arrayValidation = [
+            'nama_progress' => 'required|String',
+            'mulai' => 'required|date_format:Y-m-d\TH:i',
+            'selesai' => 'required|date_format:Y-m-d\TH:i',
+        ];
+        
+        $validateData = $request->validate($arrayValidation);
+        $periode_aktif = DB::table('periode')->where('status', '1')->value('id');
+       
+        //$periodeAktif = PeriodeModel::with('periode')->where('status', '"1"')->get();
+        
+        //data insert isian utama
+        $dataUpdate = [
+            'id_periode' => $periode_aktif,
+            'id_users' => Auth::id(),
+            'nama_progress' => $request->input('nama_progress'),
+            'mulai' => $request->input('mulai'),
+            'selesai' => $request->input('selesai'),
+        ];
+        
+        $progress->update($dataUpdate);
+        return redirect()->route('progress.index')->with('success', 'data berhasil disimpan!');
     }
 
     /**
