@@ -11,12 +11,14 @@
 <div class="card shadow mb-4">
     <div class="card-header py-3">
         {{-- TOMBOL TAMBAH --}}
+        @can('is_admin')
             <a href="progress/create" class="btn btn-primary btn-icon-split">
                 <span class="icon text-white-40">
                      <i class="fas fa-plus"></i>
                 </span>
                  <span class="text">Tambah Progress </span>
             </a>
+            @endcan
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -28,7 +30,9 @@
                         <th>Tahun</th>
                         <th>Waktu Dimulai</th>
                         <th>Waktu Selesai</th>
+                        @can('is_admin')
                         <th>Aksi</th>
+                        @endcan
                     </tr>
                 </thead>
                 <tbody>
@@ -41,6 +45,7 @@
                         <td>{{ ($progress->periode->status == '1') ? $progress->periode->tahun : '' }}</td>
                         <td>{{ $progress->mulai}}</td>
                         <td>{{ $progress->selesai}}</td>
+                        @can('is_admin')
                         <td>
                         <form action="{{ route('progress.destroy', $progress->id) }}" method="POST"  data-bs-toggle="tooltip" >
                         @method('DELETE')
@@ -56,6 +61,7 @@
                         </a>
                         </form>
                         </td>
+                        @endcan
                     </tr>
                     @endforeach
                     @endif

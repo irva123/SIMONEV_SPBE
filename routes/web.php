@@ -3,6 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PeriodeController;
 use App\Http\Controllers\ProgressController;
+use App\Http\Controllers\DomainController;
+use App\Http\Controllers\AspekController;
+use App\Http\Controllers\IndikatorController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,8 +26,12 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
-Route::resource('/periode', PeriodeController::class);
-Route::resource('/progress', ProgressController::class);
+Route::resource('/periode', PeriodeController::class)->middleware('auth');
+Route::resource('/progress', ProgressController::class)->middleware('auth');
+Route::resource('/domain', DomainController::class);
+Route::resource('/aspek', AspekController::class);
+Route::resource('/indikator', IndikatorController::class);
+Route::resource('/user', UserController::class);
 Route::get('logout', function ()
 {
     auth()->logout();

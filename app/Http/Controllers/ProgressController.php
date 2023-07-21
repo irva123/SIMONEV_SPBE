@@ -11,9 +11,14 @@ use App\Http\Requests\StoreProgressRequest;
 use App\Http\Requests\UpdateProgressRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class ProgressController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     /**
      * Display a listing of the resource.
@@ -22,6 +27,8 @@ class ProgressController extends Controller
      */
     public function index(Request $request)
     {
+        if(Gate::denies('is_OPD')) {
+        //$this->authorize('is_admin');
         $pagination = 10;
         //$progress = ProgressModel::OrderBy('created_at', 'desc')->paginate($pagination);
         //$progress = ProgressModel::Join('periode', 'progress.id_periode', '=', 'periode.id')->where('periode.status', '1')->OrderBy('created_at', 'desc')->paginate($pagination);
@@ -31,6 +38,7 @@ class ProgressController extends Controller
         //$progress = ProgressModel::get();
         return view('progress.index', ['progress'=>$progress])->with('i', ($request->input('page',1)-1)* $pagination);
     }
+}
 
     /**
      * Show the form for creating a new resource.
@@ -39,6 +47,7 @@ class ProgressController extends Controller
      */
     public function create()
     {
+        $this->authorize('is_admin');
         $progress = ProgressModel::all();
         return view('progress.create',['users'=> User::all(), 'periode'=> PeriodeModel::all()], compact('progress'));
     }
@@ -51,6 +60,7 @@ class ProgressController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('is_admin');
         $arrayValidation = [
             'nama_progress' => 'required|String',
             'mulai' => 'required|date_format:Y-m-d\TH:i',
@@ -96,6 +106,7 @@ class ProgressController extends Controller
      */
     public function edit(ProgressModel $progress)
     {
+        $this->authorize('is_admin');
         $users = User::get();
         return view('progress.edit',compact(['users', 'progress']));
     }
@@ -109,6 +120,7 @@ class ProgressController extends Controller
      */
     public function update(UpdateProgressRequest $request, ProgressModel $progress)
     {
+        $this->authorize('is_admin');
         //$data=$request->all();
         $arrayValidation = [
             'nama_progress' => 'required|String',
@@ -142,6 +154,7 @@ class ProgressController extends Controller
      */
     public function destroy(ProgressModel $progress)
     {
+        $this->authorize('is_admin');
         $progress->delete($progress->id);
         return redirect()->route('progress.index')->with('success', 'data berhasil dihapus!');
     }

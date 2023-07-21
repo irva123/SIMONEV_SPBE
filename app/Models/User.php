@@ -17,13 +17,17 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    use HasFactory;
+    protected $table = 'users';
+    protected $guarded = ['id'];
     protected $fillable = [
         'username',
         'password',
         'nama_lengkap',
         'nip', 
         'email',
-        'no_hp'
+        'no_hp',
+        'role'
         
     ];
 
