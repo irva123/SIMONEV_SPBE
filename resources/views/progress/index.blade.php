@@ -5,11 +5,11 @@
 <div class="container-fluid">
 
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">Tabel Progress</h1>
 
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
     <div class="card-header py-3">
+    <h5 class="h5 mb-3 text-gray-800">Tabel Progress Periode {{ ($progress2->status == '1') ? $progress2->tahun : '' }}</h5>
         {{-- TOMBOL TAMBAH --}}
         @can('is_admin')
             <a href="progress/create" class="btn btn-primary btn-icon-split">
@@ -42,7 +42,7 @@
                     
                         <td>{{ ++$i }}</td>
                         <td>{{ $progress->nama_progress}}</td>
-                        <td>{{ ($progress->periode->status == '1') ? $progress->periode->tahun : '' }}</td>
+                        <td>{{ $progress->tahun}}</td>
                         <td>{{ $progress->mulai}}</td>
                         <td>{{ $progress->selesai}}</td>
                         @can('is_admin')

@@ -15,13 +15,6 @@
           <label for="username" class="form-label">Username</label>
                     <input type="text" class="form-control @error('username') is-invalid @enderror" id="username" 
                     name="username" value = "{{ $users->username }}">
-                
-                </div>
-
-                <div class="mb-3">
-                    <label for="password" class="form-label">Password</label>
-                    <input type="text" class="form-control @error('password') is-invalid @enderror" id="password" 
-                    name="password" value = "{{ $users->password }}">
                 </div>
 
                 <div class="mb-3">
@@ -48,13 +41,27 @@
                     name="no_hp" value = "{{ $users->no_hp }}">
                 </div>
 
-                <div class="card-body">
-                    <div class="form-group">
+                <div class="mb-3">
+                    <label for="password" class="form-label">{{ __('Password') }}</label>
+                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                @error('password')
+                  <span class="invalid-feedback" role="alert">
+                      <strong>{{ $message }}</strong>
+                  </span>
+                @enderror
+                </div>
+
+                <div class="mb-3">
+                    <label for="password-confirm" class="form-label">{{ __('Confirm Password') }}</label>
+                  <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                </div>
+
+                <div class="form-group">
                 <label for="role">Role User</label>
                 <select class="custom-select" id="role" name="role">
-                <option value=admin @selected($users->role == admin)>Admin</option>
-                <option value=opd @selected($users->role == opd)>OPD</option>
-                <option value=evaluator @selected($users->role == evaluator)>Evaluator Eksternal</option>
+                <option value='admin' @selected($users->role == 'admin')>Admin</option>
+                <option value='opd' @selected($users->role == 'opd')>OPD</option>
+                <option value='evaluator' @selected($users->role == 'evaluator')>Evaluator Eksternal</option>
                 </select>
                 </div>
 

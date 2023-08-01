@@ -22,6 +22,7 @@
                 </div>
 
           <div class="card-footer">
+          <div class="form-group pull-right"><a href="{{url()->previous()}}" class="btn btn-primary">Batal</a>
             <button type="submit" class="btn btn-primary">Simpan</button>
           </div>
         </div>

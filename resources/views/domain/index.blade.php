@@ -25,15 +25,19 @@
                     <tr>
                         <th>No</th>
                         <th>Nama Domain</th>
+                        @can('is_admin')
                         <th>Aksi</th>
+                        @endcan
                     </tr>
                 </thead>
                 <tbody>
                 @if ($domain->count() > 0)
                 @foreach ($domain as $domain)
                     <tr>
+
                         <td>{{ ++$i }}</td>
                         <td>{{ $domain->nama_domain}}</td>
+                        @can('is_admin')
                         <td>
                         <form action="{{ route('domain.destroy', $domain->id) }}" method="POST"  data-bs-toggle="tooltip" >
                         @method('DELETE')
@@ -49,6 +53,7 @@
                         </a>
                         </form>
                         </td>
+                        @endcan
                     </tr>
                     @endforeach
                     @endif

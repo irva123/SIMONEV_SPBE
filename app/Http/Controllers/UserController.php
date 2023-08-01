@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\RoleModel;
+use App\Models\OpdModel;
 use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -42,7 +44,7 @@ class UserController extends Controller
     public function create()
     {
         $users = User::all();
-        return view('user.create',['users'=> User::all()], compact('users'));
+        return view('user.create',['users'=> User::all(), 'role'=>RoleModel::all(), 'opd'=>OpdModel::all()], compact('users'));
     }
 
     /**
@@ -62,6 +64,7 @@ class UserController extends Controller
             'email' => 'required|String',
             'no_hp' => 'required|String',
             'role' => 'required|String',
+            'opd' => 'required|String',
         ];
         
         $validateData = $request->validate($arrayValidation);
@@ -71,7 +74,7 @@ class UserController extends Controller
         //data insert isian utama
         $dataInsert = [
             'username' => $request->input('username'),
-            'password' => $request->input('password'),
+            'password' => bcrypt($request->input('password')),
             'nama_lengkap' => $request->input('nama_lengkap'),
             'nip' => $request->input('nip'),
             'email' => $request->input('email'),
@@ -101,11 +104,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $users)
+    public function edit($id)
     {
         //$this->authorize('is_admin');
-        $users = User::get();
-        return view('user.edit',compact(['users']));
+        $users = User::find($id);
+        return view('user.edit',['users'=> $users]);
     }
     
     /**
@@ -115,37 +118,46 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateUserRequest $request, User $users)
+    public function update(Request $request, $id)
     {
         //$this->authorize('is_admin');
         //$data=$request->all();
-        $arrayValidation = [
-            'username' => 'required|String',
-            'password' => 'required|String',
-            'nama_lengkap' => 'required|String',
-            'nip' => 'required|String',
-            'email' => 'required|String',
-            'no_hp' => 'required|String',
-            'role' => 'required|String',
-        ];
+        // $arrayValidation = [
+        //     'username' => 'required|String',
+        //     'password' => 'required|String',
+        //     'nama_lengkap' => 'required|String',
+        //     'nip' => 'required|String',
+        //     'email' => 'required|String',
+        //     'no_hp' => 'required|String',
+        //     'role' => 'required|String',
+        // ];
         
-        $validateData = $request->validate($arrayValidation);
+        // $validateData = $request->validate($arrayValidation);
        
-        //$periodeAktif = PeriodeModel::with('periode')->where('status', '"1"')->get();
+        // //$periodeAktif = PeriodeModel::with('periode')->where('status', '"1"')->get();
         
-        //data insert isian utama
-        $dataUpdate = [
-            'username' => $request->input('username'),
-            'password' => $request->input('password'),
-            'nama_lengkap' => $request->input('nama_lengkap'),
-            'nip' => $request->input('nip'),
-            'email' => $request->input('email'),
-            'no_hp' => $request->input('no_hp'),
-            'role' => $request->input('role'),
-        ];
-        
-        $users->update($dataUpdate);
+        // //data insert isian utama
+        // $dataUpdate = [
+        //     'username' => $request->input('username'),
+        //     'password' => $request->input('password'),
+        //     'nama_lengkap' => $request->input('nama_lengkap'),
+        //     'nip' => $request->input('nip'),
+        //     'email' => $request->input('email'),
+        //     'no_hp' => $request->input('no_hp'),
+        //     'role' => $request->input('role'),
+        // ];
+
+        $users = User::find($id);
+        $users->username = e($request->input('username'));
+        $users->password = bcrypt($request->input('password'));
+        $users->nama_lengkap = e($request->input('nama_lengkap'));
+        $users->nip = e($request->input('nip'));
+        $users->email = e($request->input('email'));
+        $users->no_hp = e($request->input('no_hp'));
+        $users->role = e($request->input('role'));
+        $users->save();
         return redirect()->route('user.index')->with('success', 'data berhasil disimpan!');
+    
     }
 
 
@@ -155,10 +167,18 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $users)
+    public function destroy($id)
     {
         //$this->authorize('is_admin');
-        $users->delete($users->id);
+        $users = User::find($id);
+        $users->delete();
         return redirect()->route('user.index')->with('success', 'data berhasil dihapus!');
     }    
+
+    public function getOpd($id)
+    {
+        //$this->authorize('is_admin');
+        $role = RoleModel::where('id_role', $id)->get();
+        return response()->json($role);
+    }
 }

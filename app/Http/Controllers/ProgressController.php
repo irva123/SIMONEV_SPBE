@@ -32,11 +32,13 @@ class ProgressController extends Controller
         $pagination = 10;
         //$progress = ProgressModel::OrderBy('created_at', 'desc')->paginate($pagination);
         //$progress = ProgressModel::Join('periode', 'progress.id_periode', '=', 'periode.id')->where('periode.status', '1')->OrderBy('created_at', 'desc')->paginate($pagination);
-        $progress = ProgressModel::Join('periode', 'progress.id_periode', '=', 'periode.id')->where('periode.status', '1')->OrderBy('progress.created_at', 'desc')->paginate($pagination);
+        //$progress = DB::table('progress')->leftJoin('periode', 'periode.id', '=', 'progress.id_periode')->where('periode.status', '1')->OrderBy('progress.created_at', 'desc')->paginate($pagination);
+        //$progress = DB::table('progress')->paginate($pagination);
+        $progress = DB::table('progress')->Join('periode', 'progress.id_periode', '=', 'periode.id')->where('periode.status', '1')->select('progress.*', 'periode.tahun')->OrderBy('progress.created_at', 'desc')->paginate($pagination);
         //$progress = DB::table('progress')->join('periode', 'progress.id_periode', '=', 'periode.id')->where('periode.status', '1')->get();
-      
-        //$progress = ProgressModel::get();
-        return view('progress.index', ['progress'=>$progress])->with('i', ($request->input('page',1)-1)* $pagination);
+        //$progress = DB::table('progress')->join('periode', 'progress.id_periode', '=', 'periode.id')->where('periode.status', '1')->get();
+        $progress2 = DB::table('periode')->where('status', '1')->first();
+        return view('progress.index', ['progress'=>$progress, 'progress2'=>$progress2])->with('i', ($request->input('page',1)-1)* $pagination);
     }
 }
 
@@ -108,7 +110,8 @@ class ProgressController extends Controller
     {
         $this->authorize('is_admin');
         $users = User::get();
-        return view('progress.edit',compact(['users', 'progress']));
+        $periode = PeriodeModel::get();
+        return view('progress.edit',compact(['users', 'periode', 'progress']));
     }
 
     /**

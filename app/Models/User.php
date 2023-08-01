@@ -52,11 +52,15 @@ class User extends Authenticatable
 
     public function progress()
     {
-        return $this->hasMany(Space::class, 'id_users');
+        return $this->hasMany(ProgressModel::class, 'id_users');
     }
 
     public function periode()
     {
-        return $this->hasMany(Space::class, 'id_users');
+        return $this->hasMany(PeriodeModel::class, 'id_users');
+    }
+    public function opd()
+    {
+        return $this->hasMany(OpdModel::class, 'id_opd');
     }
 }

@@ -28,7 +28,9 @@
                         <th>Nama Aspek</th>
                         <th>Nama Indikator</th>
 			            <th>Bobot Nilai</th>
+                        @can('is_admin')
                         <th>Aksi</th>
+                        @endcan
                     </tr>
                 </thead>
                 <tbody>
@@ -40,6 +42,7 @@
                         <td>{{ $indikator->aspek->nama_aspek}}</td>
                         <td>{{ $indikator->nama_indikator}}</td>
                         <td>{{ $indikator->bobot_nilai}}</td>
+                        @can('is_admin')
                         <td>
                         <form action="{{ route('indikator.destroy', $indikator->id) }}" method="POST"  data-bs-toggle="tooltip" >
                         @method('DELETE')
@@ -55,6 +58,7 @@
                         </a>
                         </form>
                         </td>
+                        @endcan
                     </tr>
                     @endforeach
                     @endif

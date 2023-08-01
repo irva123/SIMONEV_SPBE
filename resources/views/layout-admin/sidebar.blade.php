@@ -86,11 +86,6 @@
                 </div>
             </li>
 
-  <li class="nav-item">
-    <a class="nav-link" href="/progress">
-      <i class="fa fa-calendar"></i>
-      <span>Users</span></a>
-  </li>
 @endcan
   <!-- Divider -->
   <hr class="sidebar-divider d-none d-md-block">

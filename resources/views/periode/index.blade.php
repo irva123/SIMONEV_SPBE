@@ -5,11 +5,11 @@
 <div class="container-fluid">
 
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">Tabel Periode</h1>
 
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
     <div class="card-header py-3">
+    <h5 class="h5 mb-3 text-gray-800">Tabel Periode </h5>
         {{-- TOMBOL TAMBAH --}}
         @can('is_admin')
             <a href="periode/create" class="btn btn-primary btn-icon-split">
@@ -45,7 +45,7 @@
                         <td>{{ $periode->mulai}}</td>
                         <td>{{ $periode->selesai}}</td>
                         
-                        <td><label class="label {{ ($periode->status == '1') ? 'badge badge-success' : 'badge badge-danger' }}">{{ ($periode->status == '1') ? 'Aktif' : 'Tidak Aktif' }}</label></td>
+                        <td><label class="label {{ ($periode->status ==  '1') ? 'badge badge-success' : 'badge badge-danger' }}">{{ ($periode->status == '1') ? 'Aktif' : 'Tidak Aktif' }}</label></td>
                         @can('is_admin')
                         <td>
                         <form action="{{ route('periode.destroy', $periode->id) }}" method="POST"  data-bs-toggle="tooltip" >

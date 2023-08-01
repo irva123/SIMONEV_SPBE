@@ -66,24 +66,38 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="password" class="form-label">Password</label>
-                    <input type="text" class="form-control @error('password') is-invalid @enderror" id="password" 
-                    name="password" required autofocus value = "{{ old('password') }}">
+                    <label for="password" class="form-label">{{ __('Password') }}</label>
+                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
                 @error('password')
-                <div class="invalid-feedback">
-                    {{ $messages }}
-                </div>
+                  <span class="invalid-feedback" role="alert">
+                      <strong>{{ $message }}</strong>
+                  </span>
                 @enderror
                 </div>
-                
+
+                <div class="mb-3">
+                    <label for="password-confirm" class="form-label">{{ __('Confirm Password') }}</label>
+                  <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                </div>
+
                 <div class="form-group">
-                <label for="role">Role User</label>
-                <select class="custom-select" id="role" name="role">
-                <option value=admin>Admin</option>
-                <option value=opd>OPD</option>
-                <option value=evaluator>Evaluator Eksternal</option>
+                <label for="nama_role">Role User</label>
+                <select name="nama_role" id="nama_role" class="custom-select" >
+                @foreach ($role as $role)
+                <option value="{{ $role->id }}">{{ $role->nama_role }}</option>
+                @endforeach
                 </select>
                 </div>
+
+                <div class="form-group" id="pilih_opd">
+                <label class="form-label">Pilih OPD</label>
+                <select name="nama_opd" id="nama_opd" class="custom-select" >
+                @foreach ($opd as $opd)
+                <option value="{{ $opd->id }}">{{ $opd->nama_opd }}</option>
+                @endforeach
+                </select>
+                </div>
+
 
           <div class="card-footer">
             <button type="submit" class="btn btn-primary">Simpan</button>
@@ -92,4 +106,5 @@
       </div>
     </div>
   </form>
+ 
 @endsection

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PeriodeController;
 use App\Http\Controllers\ProgressController;
+use App\Http\Controllers\TahapanController;
 use App\Http\Controllers\DomainController;
 use App\Http\Controllers\AspekController;
 use App\Http\Controllers\IndikatorController;

@@ -103,6 +103,53 @@ $( function() {
 } );
 </script>
 
+
+
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+  <script>
+    $(document).ready(function(){
+      $('#pilih_opd').hide();  
+
+      $('#nama_role').on('change', function(){
+        var id = $(this).val();
+
+        if(id == 2){
+          $('#pilih_opd').show();  
+        }else{
+          $('#pilih_opd').hide();  
+        }
+      });
+
+      $('#role').on('change', function(){
+        var id = $(this).val();
+        //console.log(id);
+        if (id) {
+          $.ajax({
+            url: '/opd/' + id,
+            type: 'GET',
+            data: {
+              '_token': '{{ csrf_token() }}'
+          },
+          dataType: 'json',
+          succes: function(data){
+            if (data){
+              $('#opd').empty();
+              $('#opd').append('<option value="">-Pilih-</option>');
+              $.each(data, function(key, opd) {
+                $('select[name="nama_opd"]').append(
+                  '<option value="' + opd.id + '">' + opd.nama_opd + '</option>'
+                );
+              });
+              } else {
+                $('#opd').empty();
+              }
+            }
+          })
+        }
+      });
+    });
+  </script>
+
 </body>
 
 </html>
