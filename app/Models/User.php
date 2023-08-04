@@ -27,7 +27,8 @@ class User extends Authenticatable
         'nip', 
         'email',
         'no_hp',
-        'role'
+        'id_role',
+        'id_opd'
         
     ];
 
@@ -61,6 +62,13 @@ class User extends Authenticatable
     }
     public function opd()
     {
-        return $this->hasMany(OpdModel::class, 'id_opd');
+        return $this->belongsTo(OpdModel::class, 'id_opd');
     }
+
+    public function role()
+    {
+        return $this->belongsTo(RoleModel::class, 'id_role');
+    }
+
+       
 }

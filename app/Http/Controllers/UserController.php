@@ -31,8 +31,7 @@ class UserController extends Controller
         
         $pagination = 10;
         // $periode = periodeModel::all()->OrderBy('tahun', 'asc');
-        $users = User::OrderBy('username', 'asc')->paginate($pagination);
-        $users = User::OrderBy('username', 'asc')->get();
+        $users = DB::table('users')->Join('role', 'users.id_role', '=', 'role.id')->select('users.*', 'role.nama_role')->OrderBy('username', 'asc')->paginate($pagination);
         return view('user.index', ['users'=>$users])->with('i', ($request->input('page',1)-1)* $pagination);
 }
 
@@ -58,13 +57,13 @@ class UserController extends Controller
         //$this->authorize('is_admin');
         $arrayValidation = [
             'username' => 'required|String',
-            'password' => 'required|String',
+            'password' => 'required|confirmed|String',
             'nama_lengkap' => 'required|String',
             'nip' => 'required|String',
             'email' => 'required|String',
             'no_hp' => 'required|String',
-            'role' => 'required|String',
-            'opd' => 'required|String',
+            'id_role' => 'required|String',
+            'id_opd' => 'String',
         ];
         
         $validateData = $request->validate($arrayValidation);
@@ -79,7 +78,8 @@ class UserController extends Controller
             'nip' => $request->input('nip'),
             'email' => $request->input('email'),
             'no_hp' => $request->input('no_hp'),
-            'role' => $request->input('role'),
+            'id_role' => $request->input('id_role'),
+            'id_opd' => $request->input('id_opd'),
         ];
         
         $users = User::create ( $dataInsert);
@@ -104,11 +104,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $users, $id)
     {
         //$this->authorize('is_admin');
         $users = User::find($id);
-        return view('user.edit',['users'=> $users]);
+        return view('user.edit',['users'=> $users, 'role'=>RoleModel::all(), 'opd'=>OpdModel::all()]);
     }
     
     /**
@@ -154,7 +154,8 @@ class UserController extends Controller
         $users->nip = e($request->input('nip'));
         $users->email = e($request->input('email'));
         $users->no_hp = e($request->input('no_hp'));
-        $users->role = e($request->input('role'));
+        $users->id_role = e($request->input('id_role'));
+        $users->id_opd = e($request->input('id_opd'));
         $users->save();
         return redirect()->route('user.index')->with('success', 'data berhasil disimpan!');
     
@@ -175,10 +176,10 @@ class UserController extends Controller
         return redirect()->route('user.index')->with('success', 'data berhasil dihapus!');
     }    
 
-    public function getOpd($id)
-    {
-        //$this->authorize('is_admin');
-        $role = RoleModel::where('id_role', $id)->get();
-        return response()->json($role);
-    }
+    // public function getOpd($id)
+    // {
+    //     //$this->authorize('is_admin');
+    //     $role = RoleModel::where('id_role', $id)->get();
+    //     return response()->json($role);
+    // }
 }

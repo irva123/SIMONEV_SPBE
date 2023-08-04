@@ -17,6 +17,7 @@ class IndikatorModel extends Model
         'id_domain',
         'id_aspek',
         'id_users',
+        'id_opd',
     ];
 
     public function users()
@@ -37,5 +38,10 @@ class IndikatorModel extends Model
     public function aspek()
     {
         return $this->belongsTo(AspekModel::class, 'id_aspek');
+    }
+
+    public function opd()
+    {
+        return $this->belongsTo(OpdModel::class, 'id_opd');
     }
 }

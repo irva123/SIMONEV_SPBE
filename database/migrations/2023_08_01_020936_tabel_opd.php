@@ -16,10 +16,8 @@ return new class extends Migration
         Schema::create('opd', function (Blueprint $table) {
             $table->id();
             $table->string('nama_opd');
-            $table->unsignedBigInteger('id_role');
             $table->timestamps();
-
-            $table->foreign('id_role')->references('id')->on('role');
+            
         });
     }
 

@@ -28,15 +28,15 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Gate::define('is_admin', function(User $users){
-            return $users->role === 'Admin';
+            return $users->id_role === 1;
         });
 
         Gate::define('is_eksternal', function(User $users){
-            return $users->role === 'Eksternal';
+            return $users->id_role === 3;
         });
 
         Gate::define('is_OPD', function(User $users){
-            return $users->role === 'OPD';
+            return $users->id_role === 2;
         });
         
         // if (Gate::forUser($user->role === 'Eksternal')->allows('index', $periode)){

@@ -33,13 +33,12 @@
 
   <!-- Nav Item - Utilities Collapse Menu -->
   <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                    aria-expanded="true" aria-controls="collapseUtilities">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                    aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-wrench"></i>
                     <span>Kebijakan</span>
                 </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="/domain">Domain</a>
                         <a class="collapse-item" href="/aspek">Aspek</a>
@@ -49,10 +48,19 @@
             </li>
 
   <li class="nav-item">
-    <a class="nav-link" href="/user">
-      <i class="fa fa-calendar"></i>
-      <span>Manajemen Users</span></a>
-  </li>
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+                    aria-expanded="true" aria-controls="collapseUtilities">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>User</span>
+                </a>
+                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="/user">Manajemen User</a>
+                        <a class="collapse-item" href="/opd">Data Master OPD</a>
+                    </div>
+              </div> 
+            </li>
 @endcan
 
 @can('is_eksternal')
@@ -86,6 +94,11 @@
                 </div>
             </li>
 
+  <li class="nav-item">
+    <a class="nav-link" href="/progress">
+      <i class="fa fa-calendar"></i>
+      <span>Users</span></a>
+  </li>
 @endcan
   <!-- Divider -->
   <hr class="sidebar-divider d-none d-md-block">
@@ -94,7 +107,4 @@
   <div class="text-center d-none d-md-inline">
     <button class="rounded-circle border-0" id="sidebarToggle"></button>
   </div>
-
- 
-
 </ul>

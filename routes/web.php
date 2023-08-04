@@ -8,6 +8,8 @@ use App\Http\Controllers\DomainController;
 use App\Http\Controllers\AspekController;
 use App\Http\Controllers\IndikatorController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\OpdController;
+use App\Http\Controllers\PenilaianMandiriController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +35,8 @@ Route::resource('/domain', DomainController::class);
 Route::resource('/aspek', AspekController::class);
 Route::resource('/indikator', IndikatorController::class);
 Route::resource('/user', UserController::class);
+Route::resource('/opd', OpdController::class);
+Route::resource('/penilaian', PenilaianMandiriController::class);
 Route::get('logout', function ()
 {
     auth()->logout();

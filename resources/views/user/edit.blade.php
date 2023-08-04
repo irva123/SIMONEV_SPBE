@@ -57,13 +57,25 @@
                 </div>
 
                 <div class="form-group">
-                <label for="role">Role User</label>
-                <select class="custom-select" id="role" name="role">
-                <option value='admin' @selected($users->role == 'admin')>Admin</option>
-                <option value='opd' @selected($users->role == 'opd')>OPD</option>
-                <option value='evaluator' @selected($users->role == 'evaluator')>Evaluator Eksternal</option>
-                </select>
+                <label for="id_role">Role User</label>
+                <select class="custom-select" id="id_role" name="id_role">
+                @foreach($role as $role)
+                <option @selected($role->id == $users->id_role) value="{{$role->id}}"  @class([
+                'bg-purple-600 text-white' => $role->id == $users->id_role ])> {{ $role->nama_role }}</option>
+                @endforeach
+              </select>
                 </div>
+
+                <div class="form-group" id="pilih_opd">
+                <label class="form-label">Pilih OPD</label>
+                <select class="custom-select" id="id_opd" name="id_opd">
+                @foreach($opd as $opd)
+                <option @selected($opd->id == $users->id_opd) value="{{$opd->id}}"  @class([
+                'bg-purple-600 text-white' => $opd->id == $users->id_opd ])> {{ $opd->nama_opd }}</option>
+                @endforeach
+              </select>
+                </div>
+                
 
           <div class="card-footer">
             <button type="submit" class="btn btn-primary">Simpan</button>

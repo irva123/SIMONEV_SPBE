@@ -77,12 +77,17 @@
 
                 <div class="mb-3">
                     <label for="password-confirm" class="form-label">{{ __('Confirm Password') }}</label>
-                  <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                  <input id="password-confirm" type="password" class="form-control @error('password') is-invalid @enderror" name="password_confirmation" required autocomplete="new-password">
+               @error('password-confirm')
+                  <span class="invalid-feedback" role="alert">
+                      <strong>{{ $message }}</strong>
+                  </span>
+                @enderror
                 </div>
 
                 <div class="form-group">
-                <label for="nama_role">Role User</label>
-                <select name="nama_role" id="nama_role" class="custom-select" >
+                <label for="id_role">Role User</label>
+                <select name="id_role" id="id_role" class="custom-select" >
                 @foreach ($role as $role)
                 <option value="{{ $role->id }}">{{ $role->nama_role }}</option>
                 @endforeach
@@ -91,7 +96,7 @@
 
                 <div class="form-group" id="pilih_opd">
                 <label class="form-label">Pilih OPD</label>
-                <select name="nama_opd" id="nama_opd" class="custom-select" >
+                <select name="id_opd" id="id_opd" class="custom-select" >
                 @foreach ($opd as $opd)
                 <option value="{{ $opd->id }}">{{ $opd->nama_opd }}</option>
                 @endforeach

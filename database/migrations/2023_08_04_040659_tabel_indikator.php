@@ -21,12 +21,14 @@ return new class extends Migration
             $table->unsignedBigInteger('id_domain');
             $table->unsignedBigInteger('id_aspek');
             $table->unsignedBigInteger('id_users');
+            $table->unsignedBigInteger('id_opd');
             $table->timestamps();
 
             $table->foreign('id_periode')->references('id')->on('periode');
             $table->foreign('id_domain')->references('id')->on('domain');
             $table->foreign('id_aspek')->references('id')->on('aspek');
             $table->foreign('id_users')->references('id')->on('users');
+            $table->foreign('id_opd')->references('id')->on('opd');
     });
 }
 

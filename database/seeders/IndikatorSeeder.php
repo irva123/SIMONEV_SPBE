@@ -22,6 +22,7 @@ class IndikatorSeeder extends Seeder
             'id_domain' => 1,
             'id_aspek' => 1,
             'id_users' => 2,
+            'id_opd' => 1,
         ]);
     }
 }

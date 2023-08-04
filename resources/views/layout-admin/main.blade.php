@@ -110,7 +110,7 @@ $( function() {
     $(document).ready(function(){
       $('#pilih_opd').hide();  
 
-      $('#nama_role').on('change', function(){
+      $('#id_role').on('change', function(){
         var id = $(this).val();
 
         if(id == 2){
@@ -120,34 +120,35 @@ $( function() {
         }
       });
 
-      $('#role').on('change', function(){
-        var id = $(this).val();
-        //console.log(id);
-        if (id) {
-          $.ajax({
-            url: '/opd/' + id,
-            type: 'GET',
-            data: {
-              '_token': '{{ csrf_token() }}'
-          },
-          dataType: 'json',
-          succes: function(data){
-            if (data){
-              $('#opd').empty();
-              $('#opd').append('<option value="">-Pilih-</option>');
-              $.each(data, function(key, opd) {
-                $('select[name="nama_opd"]').append(
-                  '<option value="' + opd.id + '">' + opd.nama_opd + '</option>'
-                );
-              });
-              } else {
-                $('#opd').empty();
-              }
-            }
-          })
-        }
-      });
+    //   $('#role').on('change', function(){
+    //     var id = $(this).val();
+    //     //console.log(id);
+    //     if (id) {
+    //       $.ajax({
+    //         url: '/opd/' + id,
+    //         type: 'GET',
+    //         data: {
+    //           '_token': '{{ csrf_token() }}'
+    //       },
+    //       dataType: 'json',
+    //       succes: function(data){
+    //         if (data){
+    //           $('#opd').empty();
+    //           $('#opd').append('<option value="">-Pilih-</option>');
+    //           $.each(data, function(key, opd) {
+    //             $('select[name="nama_opd"]').append(
+    //               '<option value="' + opd.id + '">' + opd.nama_opd + '</option>'
+    //             );
+    //           });
+    //           } else {
+    //             $('#opd').empty();
+    //           }
+    //         }
+    //       })
+    //     }
+    //   });
     });
+    
   </script>
 
 </body>
