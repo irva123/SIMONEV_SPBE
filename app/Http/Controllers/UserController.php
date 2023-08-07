@@ -31,9 +31,14 @@ class UserController extends Controller
         
         $pagination = 10;
         // $periode = periodeModel::all()->OrderBy('tahun', 'asc');
-        $users = DB::table('users')->Join('role', 'users.id_role', '=', 'role.id')->select('users.*', 'role.nama_role')->OrderBy('username', 'asc')->paginate($pagination);
+        $users = DB::table('users')
+        ->join('role', 'users.id_role', '=', 'role.id')
+        ->join('opd', 'users.id_opd', '=', 'opd.id')
+        ->select('users.*', 'role.nama_role', 'opd.nama_opd')
+        ->OrderBy('username', 'asc')
+        ->get();
         return view('user.index', ['users'=>$users])->with('i', ($request->input('page',1)-1)* $pagination);
-}
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -108,7 +113,8 @@ class UserController extends Controller
     {
         //$this->authorize('is_admin');
         $users = User::find($id);
-        return view('user.edit',['users'=> $users, 'role'=>RoleModel::all(), 'opd'=>OpdModel::all()]);
+        //return view('user.create',['users'=> User::all(), 'role'=>RoleModel::all(), 'opd'=>OpdModel::all()], compact('users'));
+        return view('user.edit',['users'=> $users, 'role'=>RoleModel::all(), 'opd'=>OpdModel::all()], compact('users'));
     }
     
     /**

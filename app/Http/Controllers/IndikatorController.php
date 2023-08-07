@@ -8,6 +8,7 @@ use App\Models\IndikatorModel;
 use App\Models\AspekModel;
 use App\Models\DomainModel;
 use App\Models\PeriodeModel;
+use App\Models\OpdModel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\UpdateIndikatorRequest;
@@ -40,7 +41,8 @@ class IndikatorController extends Controller
         $domain = DomainModel::all();
         $aspek = AspekModel::all();
         $indikator = IndikatorModel::all();
-        return view('indikator.create',['users'=> User::all()], compact('domain', 'aspek', 'indikator'));
+       
+        return view('indikator.create',['users'=> User::all(), 'opd'=> OpdModel::all()], compact('domain', 'aspek', 'indikator'));
     }
 
     /**
@@ -70,6 +72,7 @@ class IndikatorController extends Controller
             'bobot_nilai' => $request->input('bobot_nilai'),
             'id_domain' => $request->input('id_domain'),
             'id_aspek' => $request->input('id_aspek'),
+            'id_opd' => Auth::id(),
         ];
 
         $indikator = IndikatorModel::create ($dataInsert);

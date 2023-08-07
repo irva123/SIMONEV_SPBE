@@ -18,17 +18,14 @@ class OpdSeeder extends Seeder
     {
         DB::table('opd')->insert([
             'nama_opd' => 'Diskominfo',
-            'id_role' => '2',
         ]);
 
         DB::table('opd')->insert([
             'nama_opd' => 'Dispenduk',
-            'id_role' => '2',
         ]);
 
         DB::table('opd')->insert([
             'nama_opd' => 'Bakesbangpol',
-            'id_role' => '2',
         ]);
     }
 }

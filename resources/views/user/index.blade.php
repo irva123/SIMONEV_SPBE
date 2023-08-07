@@ -20,7 +20,7 @@
     </div>
     <div class="card-body">
         <div class="table-responsive">
-        <?php print_r($users); ?>
+        <!-- <?php print_r($users); ?> -->
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
@@ -38,7 +38,13 @@
                         <td>{{ ++$i }}</td>
                         <td>{{ $users->username}}</td>
                         <td>{{ $users->nama_lengkap}}</td>
-                        <td>{{ $users->nama_role}}</td>
+                        <td>
+                        @if($users->id_role == "2")
+                        {{ $users->nama_role}} ({{ $users->nama_opd }})
+                        @else
+                        {{ $users->nama_role}} 
+                        @endif
+                        </td>
                         <td>
                         <form action="{{ route('user.destroy', $users->id) }}" method="POST"  data-bs-toggle="tooltip" >
                         @method('DELETE')

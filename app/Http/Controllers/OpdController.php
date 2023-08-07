@@ -33,7 +33,6 @@ class OpdController extends Controller
      if(Gate::denies('is_OPD')) {
         
         $pagination = 10;
-        // $periode = periodeModel::all()->OrderBy('tahun', 'asc');
         $opd = opdModel::OrderBy('id', 'asc')->paginate($pagination);
         $opd = opdModel::OrderBy('id', 'asc')->get();
         return view('opd.index', ['opd'=>$opd])->with('i', ($request->input('page',1)-1)* $pagination);

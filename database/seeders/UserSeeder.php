@@ -23,7 +23,9 @@ class UserSeeder extends Seeder
             'nip' => '2141764103',
             'email' => 'irva@gmail.com',
             'no_hp' => '085123098778',
-            'role' => 'Admin',
+            'id_role' => '1',
+            'id_opd' => '1',
+           
         ]);
 
         DB::table('users')->insert([
@@ -33,7 +35,9 @@ class UserSeeder extends Seeder
             'nip' => '2141764054',
             'email' => 'Diska@gmail.com',
             'no_hp' => '085123098779',
-            'role' => 'OPD',
+            'id_role' => '2',
+            'id_opd' => '1',
+           
         ]);
 
         DB::table('users')->insert([
@@ -43,7 +47,9 @@ class UserSeeder extends Seeder
             'nip' => '2141764016',
             'email' => 'Aaryandari@gmail.com',
             'no_hp' => '085123098770',
-            'role' => 'Eksternal',
+            'id_role' => '3',
+            'id_opd' => '1',
+            
         ]);
     }
 }

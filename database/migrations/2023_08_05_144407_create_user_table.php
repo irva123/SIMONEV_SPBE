@@ -13,13 +13,21 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('users', function(Blueprint $table){
-            $table->unsignedBigInteger('id_role')->nullable()->after('no_hp');
-            $table->unsignedBigInteger('id_opd')->nullable()->after('id_role');
+        Schema::create('users', function (Blueprint $table) {
+            $table->id();
+            $table->string('username');
+            $table->string('password');
+            $table->string('nama_lengkap');
+            $table->string('nip');
+            $table->string('email')->unique();
+            $table->string('no_hp');
+            $table->unsignedBigInteger('id_role');
+            $table->unsignedBigInteger('id_opd');
+            $table->timestamps();
 
             $table->foreign('id_role')->references('id')->on('role');
             $table->foreign('id_opd')->references('id')->on('opd');
-            });
+        });
     }
 
     /**
@@ -29,9 +37,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('users', function(Blueprint $table){
-            $table->unsignedBigInteger('id_role');
-            $table->unsignedBigInteger('id_opd');
-            });
+        Schema::dropIfExists('users');
     }
 };

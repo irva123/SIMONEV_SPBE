@@ -34,7 +34,7 @@ class ProgressController extends Controller
         //$progress = ProgressModel::Join('periode', 'progress.id_periode', '=', 'periode.id')->where('periode.status', '1')->OrderBy('created_at', 'desc')->paginate($pagination);
         //$progress = DB::table('progress')->leftJoin('periode', 'periode.id', '=', 'progress.id_periode')->where('periode.status', '1')->OrderBy('progress.created_at', 'desc')->paginate($pagination);
         //$progress = DB::table('progress')->paginate($pagination);
-        $progress = DB::table('progress')->Join('periode', 'progress.id_periode', '=', 'periode.id')->where('periode.status', '1')->select('progress.*', 'periode.tahun')->OrderBy('progress.created_at', 'desc')->paginate($pagination);
+        $progress = DB::table('progress')->Join('periode', 'progress.id_periode', '=', 'periode.id')->where('periode.status', '1')->select('progress.*', 'periode.tahun')->OrderBy('progress.created_at', 'asc')->paginate($pagination);
         //$progress = DB::table('progress')->join('periode', 'progress.id_periode', '=', 'periode.id')->where('periode.status', '1')->get();
         //$progress = DB::table('progress')->join('periode', 'progress.id_periode', '=', 'periode.id')->where('periode.status', '1')->get();
         $progress2 = DB::table('periode')->where('status', '1')->first();

@@ -28,7 +28,8 @@ class User extends Authenticatable
         'email',
         'no_hp',
         'id_role',
-        'id_opd'
+        'id_opd',
+        'nama_role',
         
     ];
 
