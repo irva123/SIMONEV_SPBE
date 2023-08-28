@@ -61,7 +61,7 @@
                 <select class="custom-select" id="id_role" name="id_role">
                 @foreach($role as $role)
                 <option @selected($role->id == $users->id_role) value="{{$role->id}}"  @class([
-                'bg-purple-600 text-white' => $role->id == $users->id_role ])> {{ $role->nama_role }}</option>
+                'bg-purple-600 text-black' => $role->id == $users->id_role ])> {{ $role->nama_role }}</option>
                 @endforeach
               </select>
                 </div>
@@ -71,13 +71,15 @@
                 <select class="custom-select" id="id_opd" name="id_opd">
                 @foreach($opd as $opd)
                 <option @selected($opd->id == $users->id_opd) value="{{$opd->id}}"  @class([
-                'bg-purple-600 text-white' => $opd->id == $users->id_opd ])> {{ $opd->nama_opd }}</option>
+                'bg-purple-600 text-black' => $opd->id == $users->id_opd ])> {{ $opd->nama_opd }}</option>
                 @endforeach
               </select>
+                </div>
                 </div>
                 
 
           <div class="card-footer">
+          <div class="form-group pull-right"><a href="{{url()->previous()}}" class="btn btn-primary">Batal</a>
             <button type="submit" class="btn btn-primary">Simpan</button>
           </div>
         </div>

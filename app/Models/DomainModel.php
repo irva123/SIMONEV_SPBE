@@ -12,6 +12,8 @@ class DomainModel extends Model
     protected $guarded = ['id'];
     protected $fillable = [
         'nama_domain',
+        'deskripsi',
+        'bobot_nilai',
         'id_periode',
         'id_users',
     ];

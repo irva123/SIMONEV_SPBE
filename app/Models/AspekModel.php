@@ -11,7 +11,10 @@ class AspekModel extends Model
     protected $table = 'aspek';
     protected $guarded = ['id'];
     protected $fillable = [
+        'id',
         'nama_aspek',
+        'deskripsi',
+        'bobot_nilai',
         'id_periode',
         'id_domain',
         'id_users',

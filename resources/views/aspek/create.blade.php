@@ -15,9 +15,9 @@
                 <select class="custom-select" name="id_domain">
                 @foreach($domain as $domain)
                 @if(old('id_domain') == $domain->id)
-                    <option value="{{$domain->id}}" selected>{{ $domain->nama_domain }}</option>
+                    <option value="{{$domain->id}}" selected>{{ $domain->nama_domain }} {{ $domain->deskripsi }}</option>
                 @else 
-                    <option value="{{$domain->id}}">{{ $domain->nama_domain }}</option>
+                    <option value="{{$domain->id}}">{{ $domain->nama_domain }} {{ $domain->deskripsi }}</option>
                 @endif
                 @endforeach
                 </select>
@@ -32,6 +32,23 @@
                     {{ $messages }}
                 </div>
                 @enderror
+                </div>
+
+                <div class="mb-3">
+                <label for="deskripsi" class="form-label">Deskripsi</label>
+                    <input type="text" class="form-control @error('deskripsi') is-invalid @enderror" id="deskripsi" 
+                    name="deskripsi" required autofocus value = "{{ old('deskripsi') }}">
+                @error('deskripsi')
+                <div class="invalid-feedback">
+                    {{ $messages }}
+                </div>
+                @enderror
+                </div>
+            
+                <div class="mb-3">
+                    <label for="bobot_nilai" class="form-label">Bobot Nilai</label>
+                    <input type="text" class="form-control @error('bobot_nilai') is-invalid @enderror" id="bobot_nilai" 
+                    name="bobot_nilai" required autofocus value = "{{ old('bobot_nilai') }}">
                 </div>
 
           <div class="card-footer">

@@ -12,12 +12,19 @@ class IndikatorModel extends Model
     protected $guarded = ['id'];
     protected $fillable = [
         'nama_indikator',
+        'deskripsi',
         'bobot_nilai',
         'id_periode',
         'id_domain',
         'id_aspek',
         'id_users',
         'id_opd',
+        'penjelasan_indikator',
+        'kriteria1',
+        'kriteria2',
+        'kriteria3',
+        'kriteria4',
+        'kriteria5'
     ];
 
     public function users()

@@ -49,6 +49,8 @@ class DomainController extends Controller
     {
         $arrayValidation = [
             'nama_domain' => 'required|String',
+            'deskripsi' => 'required|String',
+            'bobot_nilai' => 'required|numeric',
         ];
 
         $validateData = $request->validate($arrayValidation);
@@ -60,6 +62,8 @@ class DomainController extends Controller
             'id_periode' => $periode_aktif,
             'id_users' => Auth::id(),
             'nama_domain' => $request->input('nama_domain'),
+            'deskripsi' => $request->input('deskripsi'),
+            'bobot_nilai' => $request->input('bobot_nilai'),
         ];
 
         $domain = DomainModel::create ($dataInsert);
@@ -102,6 +106,8 @@ class DomainController extends Controller
     {
         $arrayValidation = [
             'nama_domain' => 'required|String',
+            'deskripsi' => 'required|String',
+            'bobot_nilai' => 'required|numeric',
         ];
     
         $validateData = $request->validate($arrayValidation);
@@ -113,6 +119,8 @@ class DomainController extends Controller
             'id_periode' => $periode_aktif,
             'id_users' => Auth::id(),
             'nama_domain' => $request->input('nama_domain'),
+            'deskripsi' => $request->input('deskripsi'),
+            'bobot_nilai' => $request->input('bobot_nilai'),
         ];
 
         $domain->update($dataUpdate);

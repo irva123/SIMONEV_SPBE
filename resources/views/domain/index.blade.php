@@ -25,6 +25,7 @@
                     <tr>
                         <th>No</th>
                         <th>Nama Domain</th>
+                        <th>Bobot Nilai</th>
                         @can('is_admin')
                         <th>Aksi</th>
                         @endcan
@@ -36,7 +37,8 @@
                     <tr>
 
                         <td>{{ ++$i }}</td>
-                        <td>{{ $domain->nama_domain}}</td>
+                        <td>{{ $domain->nama_domain}} {{ $domain->deskripsi}}</td>
+                        <td>{{ $domain->bobot_nilai}}</td>
                         @can('is_admin')
                         <td>
                         <form action="{{ route('domain.destroy', $domain->id) }}" method="POST"  data-bs-toggle="tooltip" >

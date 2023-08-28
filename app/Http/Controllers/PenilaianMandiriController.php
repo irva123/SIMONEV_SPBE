@@ -7,8 +7,11 @@ use Illuminate\Http\Request;
 use App\Models\PeriodeModel;
 use App\Models\ProgressModel;
 use App\Models\IndikatorModel;
+use App\Models\DomainModel;
+use App\Models\AspekModel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\DB;
 
 class PenilaianMandiriController extends Controller
 {
@@ -19,8 +22,11 @@ class PenilaianMandiriController extends Controller
      */
     public function index(Request $request)
     {
-        $penilaian = ProgressModel::all();
-        return view('opd.index', ['indikator'=>IndikatorModel::all(), 'progress'=>ProgressModel::all()]);
+        $pagination = 10;
+        $filtertahun = (!empty($request->input('tahun')) ? $request->input('tahun') : date("Y"));
+        $periode = PeriodeModel::where('tahun', $filtertahun)->get();
+        $progress = DB::table('progress')->Join('periode', 'progress.id_periode', '=', 'periode.id')->where('periode.status', '1')->select('progress.*', 'periode.tahun')->OrderBy('progress.created_at', 'desc')->paginate($pagination);
+        return view('tampilan_opd.penilaian1', ['indikator'=>IndikatorModel::all(), 'progress'=>$progress, 'periode' => $periode])->with('i', ($request->input('page',1)-1)* $pagination);
     }
 
     /**
@@ -28,9 +34,13 @@ class PenilaianMandiriController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $pagination = 10;
+        $progress = DB::table('progress')->Join('periode', 'progress.id_periode', '=', 'periode.id')->where('periode.status', '1')->select('progress.*', 'periode.tahun')->OrderBy('progress.created_at', 'desc')->get();
+        $indikator2 = IndikatorModel::where('indikator.id_opd', Auth::user()->id_opd)->OrderBy('indikator.created_at', 'asc')->get();
+        // dd($indikator2);
+        return view('tampilan_opd.penilaian2', ['domain'=>DomainModel::all(), 'aspek'=>AspekModel::all(), 'indikator2'=>$indikator2, 'progress'=>$progress, 'periode' => PeriodeModel::all()])->with('i', ($request->input('page',1)-1)* $pagination);
     }
 
     /**
@@ -61,9 +71,12 @@ class PenilaianMandiriController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(IndikatorModel $indikator, $id)
     {
-        //
+        $indikator = IndikatorModel::find($id);
+        return view('tampilan_opd.penilaian3',['indikator'=>$indikator]);
+
+        
     }
 
     /**
@@ -87,5 +100,11 @@ class PenilaianMandiriController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function jawaban(Request $request, $id)
+    {
+        $indikator2 = IndikatorModel::find($id);
+        return redirect('penilaian/create');
     }
 }

@@ -25,6 +25,7 @@ class UpdateAspekRequest extends FormRequest
     {
         return [
             'nama_aspek' => 'required',
+            'bobot_nilai' => 'required',
             'id_domain' => 'required',
         ];
     }
@@ -33,6 +34,7 @@ class UpdateAspekRequest extends FormRequest
     {
         return [
             'nama_aspek' => 'Nama harus diisi',
+            'bobot_nilai' => 'harus diisi',
             'id_domain' => 'id domain harus diisi',
         ];
     

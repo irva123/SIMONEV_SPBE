@@ -31,7 +31,12 @@ class UserController extends Controller
         
         $pagination = 10;
         // $periode = periodeModel::all()->OrderBy('tahun', 'asc');
-        $users = DB::table('users')->Join('role', 'users.id_role', '=', 'role.id')->select('users.*', 'role.nama_role')->OrderBy('username', 'asc')->paginate($pagination);
+        $users = DB::table('users')
+        ->join('role', 'users.id_role', '=', 'role.id')
+        ->leftjoin('opd', 'users.id_opd', '=', 'opd.id')
+        ->select('users.*', 'role.nama_role', 'opd.nama_opd')
+        ->OrderBy('username', 'asc')
+        ->get();
         return view('user.index', ['users'=>$users])->with('i', ($request->input('page',1)-1)* $pagination);
 }
 

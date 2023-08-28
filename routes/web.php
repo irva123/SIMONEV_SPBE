@@ -10,6 +10,7 @@ use App\Http\Controllers\IndikatorController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\OpdController;
 use App\Http\Controllers\PenilaianMandiriController;
+use App\Http\Controllers\Auth\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,21 +23,35 @@ use App\Http\Controllers\PenilaianMandiriController;
 |
 */
 
-Route::get('/', function () {
+Route::get('/a', function () {
     return view('auth.login');
+});
+
+Route::get('/penilaian2', function () {
+    return view('tampilan_opd.penilaian2');
 });
 
 Auth::routes();
 
+Route::get('getAspek/{id}', function ($id) {
+    $aspek = App\Models\AspekModel::where('id_domain',$id)->get();
+    return response()->json($aspek);
+});
+
+Route::get('/', [App\Http\Controllers\Auth\LoginController::class, 'index']);
+
+Route::get('reload-captcha', [LoginController::class, 'reloadCaptcha']);
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
 Route::resource('/periode', PeriodeController::class)->middleware('auth');
 Route::resource('/progress', ProgressController::class)->middleware('auth');
-Route::resource('/domain', DomainController::class);
-Route::resource('/aspek', AspekController::class);
-Route::resource('/indikator', IndikatorController::class);
-Route::resource('/user', UserController::class);
-Route::resource('/opd', OpdController::class);
+Route::resource('/domain', DomainController::class)->middleware('auth');
+Route::resource('/aspek', AspekController::class)->middleware('auth');
+Route::resource('/indikator', IndikatorController::class)->middleware('auth');
+Route::resource('/user', UserController::class)->middleware('auth');
+Route::resource('/opd', OpdController::class)->middleware('auth');
 Route::resource('/penilaian', PenilaianMandiriController::class);
+Route::post('/penilaian/create/{IndikatorModel}', [PenilaianMandiriController::class, 'jawaban']);
 Route::get('logout', function ()
 {
     auth()->logout();

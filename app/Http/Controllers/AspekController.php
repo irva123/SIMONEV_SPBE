@@ -52,6 +52,8 @@ class AspekController extends Controller
     {
         $arrayValidation = [
             'nama_aspek' => 'required|String',
+            'deskripsi' => 'required|String',
+            'bobot_nilai' => 'required|numeric',
             'id_domain' => 'required|String',
         ];
 
@@ -64,6 +66,8 @@ class AspekController extends Controller
             'id_periode' => $periode_aktif,
             'id_users' => Auth::id(),
             'nama_aspek' => $request->input('nama_aspek'),
+            'deskripsi' => $request->input('deskripsi'),
+            'bobot_nilai' => $request->input('bobot_nilai'),
             'id_domain' => $request->input('id_domain'),
         ];
 
@@ -107,6 +111,8 @@ class AspekController extends Controller
     {
         $arrayValidation = [
             'nama_aspek' => 'required|String',
+            'deskripsi' => 'required|String',
+            'bobot_nilai' => 'required|numeric',
             'id_domain' => 'required|String',
         ];
     
@@ -119,6 +125,8 @@ class AspekController extends Controller
             'id_periode' => $periode_aktif,
             'id_users' => Auth::id(),
             'nama_aspek' => $request->input('nama_aspek'),
+            'deskripsi' => $request->input('deskripsi'),
+            'bobot_nilai' => $request->input('bobot_nilai'),
             'id_domain' => $request->input('id_domain'),
         ];
 

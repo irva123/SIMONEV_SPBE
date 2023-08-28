@@ -28,6 +28,7 @@
                         <th>No</th>
                         <th>Nama Domain</th>
                         <th>Nama Aspek</th>
+                        <th>Bobot Nilai</th>
                         @can('is_admin')
                         <th>Aksi</th>
                         @endcan
@@ -39,8 +40,9 @@
                     <tr>
                     
                         <td>{{ ++$i }}</td>
-                        <td>{{ $aspek->domain->nama_domain}}</td>
-                        <td>{{ $aspek->nama_aspek}}</td>
+                        <td>{{ $aspek->domain->nama_domain}} {{ $aspek->deskripsi}}</td>
+                        <td>{{ $aspek->nama_aspek}} {{ $aspek->deskripsi}}</td>
+                        <td>{{ $aspek->bobot_nilai}}</td>
                         
                         @can('is_admin')
                         <td>

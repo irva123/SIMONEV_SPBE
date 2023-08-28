@@ -28,6 +28,7 @@
                         <th>Nama Aspek</th>
                         <th>Nama Indikator</th>
 			            <th>Bobot Nilai</th>
+                        <th>OPD Terkait</th>
                         @can('is_admin')
                         <th>Aksi</th>
                         @endcan
@@ -40,8 +41,9 @@
                         <td>{{ ++$i }}</td>
                         <td>{{ $indikator->domain->nama_domain}}</td>
                         <td>{{ $indikator->aspek->nama_aspek}}</td>
-                        <td>{{ $indikator->nama_indikator}}</td>
+                        <td>{{ $indikator->nama_indikator}}{{ $indikator->deskripsi}}</td>
                         <td>{{ $indikator->bobot_nilai}}</td>
+                        <td>{{ $indikator->opd->nama_opd}}</td>
                         @can('is_admin')
                         <td>
                         <form action="{{ route('indikator.destroy', $indikator->id) }}" method="POST"  data-bs-toggle="tooltip" >
@@ -58,6 +60,7 @@
                         </a>
                         </form>
                         </td>
+                        
                         @endcan
                     </tr>
                     @endforeach

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
 
@@ -12,7 +12,7 @@
   <title>SB Admin 2 - Dashboard</title>
 
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <link rel="stylesheet" href="/resources/demos/style.css">
+  <link rel="stylesheet" href="{{ asset('/resources/demos/style.css') }}">
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
@@ -21,7 +21,12 @@
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
   <!-- Custom styles for this template-->
-  <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
+  <link href="{{ asset('../css/sb-admin-2.css') }}" rel="stylesheet">
+
+  <!-- Custom styles for this page -->
+  <link href="{{ asset('../../vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+
+  
 
 </head>
 
@@ -76,36 +81,7 @@
     <i class="fas fa-angle-up"></i>
   </a>
 
-  <!-- Bootstrap core JavaScript-->
-  <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
-  <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-
-  <!-- Core plugin JavaScript-->
-  <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
-
-  <!-- Custom scripts for all pages-->
-  <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
-
-  <!-- Page level plugins -->
-  <script src="{{ asset('vendor/chart.js/Chart.min.js') }}"></script>
-
-  <script>
-  $( function() {
-    $( "#date" ).datepicker();
-  } );
-  </script>
-
-<script>
-$( function() {
-  $( "#date" ).datepicker({
-    dateFormat: "yy-mm-dd"
-  });
-} );
-</script>
-
-
-
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
   <script>
     $(document).ready(function(){
       $('#pilih_opd').hide();  
@@ -114,9 +90,9 @@ $( function() {
         var id = $(this).val();
 
         if(id == 2){
-          $('#pilih_opd').show();  
+          $('#pilih_opd').show();
         }else{
-          $('#pilih_opd').hide();  
+          $('#pilih_opd').hide(); 
         }
       });
 
@@ -150,6 +126,135 @@ $( function() {
     });
     
   </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        <script>
+            $(document).ready(function() {
+            $('#id_domain').on('change', function() {
+               var id = $(this).val();
+               if(id) {
+                   $.ajax({
+                       url: '/getAspek/'+id,
+                       type: "GET",
+                       data : {"_token":"{{ csrf_token() }}"},
+                       dataType: "json",
+                       success:function(data)
+                       {
+                         if(data){
+                            $('#id_aspek').empty();
+                            $('#id_aspek').append('<option hidden>Pilih Aspek</option>'); 
+                            $.each(data, function(key, id_aspek){
+                                $('select[name="id_aspek"]').append('<option value="'+ id_aspek.id +'">' + id_aspek.nama_aspek+ id_aspek.deskripsi+  '</option>');
+                            });
+                        }else{
+                            $('#id_aspek').empty();
+                        }
+                     }
+                   });
+               }else{
+                 $('#id_aspek').empty();
+               }
+            });
+            });
+        </script>
+
+      <script>
+      $(document).ready(function(){
+        $('#myDIV').hide(); 
+      });
+      function myFunction() {
+        var x = document.getElementById("myDIV");
+        if (x.style.display === "none") {
+          x.style.display = "block";
+        } else {
+          x.style.display = "none";
+        }
+      }
+      </script>
+
+<script>
+  $(document).ready(function(){
+    $('#myDIV2').hide(); 
+  });
+      function myFunction2() {
+        var x = document.getElementById("myDIV2");
+        if (x.style.display === "none") {
+          x.style.display = "block";
+        } else {
+          x.style.display = "none";
+        }
+      }
+      </script>
+
+<script>
+  $(document).ready(function(){
+    $('#myDIV3').hide(); 
+  });
+      function myFunction3() {
+        var x = document.getElementById("myDIV3");
+        if (x.style.display === "none") {
+          x.style.display = "block";
+        } else {
+          x.style.display = "none";
+        }
+      }
+      </script>
+
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+        
+  <!-- Bootstrap core JavaScript-->
+  <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+  <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+
+  <!-- Page level plugins -->
+  <script src="{{ asset('vendor/datatables/jquery.dataTables.min.js') }}"></script>
+
+
+
+  <!-- Custom scripts for all pages-->
+  <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
+
+  <!-- Page level plugins -->
+  <script src="{{ asset('vendor/chart.js/Chart.min.js') }}"></script>
+
+  <!-- <script>
+  $( function() {
+    $( "#date" ).datepicker();
+  } );
+  </script>
+
+<script>
+$( function() {
+  $( "#date" ).datepicker({
+    dateFormat: "yy-mm-dd"
+  });
+} );
+</script> -->
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+    
+
+    <!-- Custom scripts for all pages-->
+    <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
+
+    
+    <script src="{{ asset('../../vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="{{ asset('../../js/demo/datatables-demo.js') }}"></script>
+
+    @stack('scripts')
 
 </body>
 

@@ -25,6 +25,7 @@ class UpdateDomainRequest extends FormRequest
     {
         return [
             'nama_domain' => 'required',
+            'bobot_nilai' => 'required',
         ];
     }
 
@@ -32,6 +33,7 @@ class UpdateDomainRequest extends FormRequest
     {
         return [
             'nama_domain' => 'Nama harus diisi',
+            'bobot_nilai' => 'harus diisi',
         ];
     
     }

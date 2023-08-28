@@ -100,6 +100,14 @@
       <span>Users</span></a>
   </li>
 @endcan
+
+@can('is_OPD')
+<li class="nav-item">
+    <a class="nav-link" href="/penilaian">
+      <i class="fa fa-calendar"></i>
+      <span>Penilaian Mandiri</span></a>
+  </li>
+@endcan
   <!-- Divider -->
   <hr class="sidebar-divider d-none d-md-block">
 
