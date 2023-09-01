@@ -67,7 +67,7 @@ class DomainController extends Controller
         ];
 
         $domain = DomainModel::create ($dataInsert);
-        
+        dd($domain);
         return redirect()->route('domain.index')->with('success', 'Data berhasil disimpan');
 
     }

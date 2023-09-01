@@ -12,13 +12,18 @@
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-bordered" width="100%" cellspacing="0">
+            <form action="/filter" method="get">
+                            @csrf
             <div class="form-group">
                 <select name="tahun" id="tahun" class="custom-select" >
-                @foreach ($periode as $periode)
-                <option value="{{ $periode->id }}">{{ $periode->tahun }}</option>
-                @endforeach
+                <option value="2022" selected="{{isset($_GET['tahun']) && $_GET['tahun'] == '2022'}}">2022</option>
+                <option value="2023" selected="{{isset($_GET['tahun']) && $_GET['tahun'] == '2023'}}">2023</option>
                 </select>
                 </div>
+                <div class="col-sm-3">
+                                    <button type="submit" class="btn btn-primary mt-4">Search</button>
+                                </div>
+                                </form>
                 <thead>
                         <th>No</th>
                         <th>Tahun</th>
@@ -27,21 +32,18 @@
                         <th>Aksi</th>
                 </thead>
                 <tbody>
-                     @if ($progress->count() > 0)
-                     @foreach ($progress as $progress)
-                        <td>{{ ++$i }}</td>
-                        <td>{{ $progress->tahun}}</td>
-                        <td>{{ $progress->selesai}}</td>
-                        <td>bla</td>
+                     @foreach ($periodeaktif as $list)
+                        <td>1</td>
+                        <td>{{ $list->tahun}}</td>
+                        <td>{{ $list->selesai}}</td>
+                        <td>blas </td>
                         <td>
                         <a href="/penilaian/create" class="btn btn-primary  btn-sm" data-bs-toggle="tooltip" > Kerjakan
                         </a>
                         <a href="/" class="btn btn-primary  btn-sm" data-bs-toggle="tooltip" > Lihat
                         </a>
-                        </form>
                         </td>
                     @endforeach
-                    @endif
                 </tbody>
             </table>
         </div>

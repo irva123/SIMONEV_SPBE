@@ -35,7 +35,8 @@
         <div id="myDIV3">
         <p class=" mb-0 text-gray-800">{!!  ( $indikator->penjelasan_indikator ) !!}</p>
     </div>
-    
+    <form method="post" action="/penilaian" enctype= multipart/form-data>
+    @csrf
         <div class="table-responsive">
             <table class="table" id="dataTable" width="100%" cellspacing="0">
             <tr>
@@ -50,8 +51,8 @@
                     <tr>
                         <td>1</td>
                         <td>{{ $indikator->kriteria1}}
-                        <input type="text" class="form-control form-control-user" id="exampleFirstName"
-                            placeholder="Jawaban" name="deskripsi" required autofocus value = "{{ old('deskripsi') }}">
+                        <input type="text" class="form-control form-control-user" id="uraian_kriteria1"
+                            placeholder="Jawaban" name="uraian_kriteria1" required autofocus value = "{{ old('uraian_kriteria1') }}">
                         </td>
                         <td> <input type="radio" id="level_terpilih_eksternal"
                              name="level_terpilih_eksternal" value = "1"></td>
@@ -61,8 +62,8 @@
                     <tr>
                         <td>2</td>
                         <td>{{ $indikator->kriteria2}}
-                        <input type="text" class="form-control form-control-user" id="exampleFirstName"
-                            placeholder="Jawaban" name="deskripsi" required autofocus value = "{{ old('deskripsi') }}">
+                        <input type="text" class="form-control form-control-user" id="uraian_kriteria2"
+                            placeholder="Jawaban" name="uraian_kriteria2" required autofocus value = "{{ old('uraian_kriteria2') }}">
                         </td>
                         <td> <input type="radio" id="level_terpilih_eksternal"
                              name="level_terpilih_eksternal" value = "2"></td>
@@ -72,8 +73,8 @@
                     <tr>
                         <td>3</td>
                         <td>{{ $indikator->kriteria3}}
-                        <input type="text" class="form-control form-control-user" id="exampleFirstName"
-                            placeholder="Jawaban" name="deskripsi" required autofocus value = "{{ old('deskripsi') }}">
+                        <input type="text" class="form-control form-control-user" id="uraian_kriteria3"
+                            placeholder="Jawaban" name="uraian_kriteria3" required autofocus value = "{{ old('uraian_kriteria3') }}">
                         </td>
                         <td> <input type="radio" id="level_terpilih_eksternal"
                              name="level_terpilih_eksternal" value = "3"></td>
@@ -83,8 +84,8 @@
                     <tr>
                         <td>4</td>
                         <td>{{ $indikator->kriteria4}}
-                        <input type="text" class="form-control form-control-user" id="exampleFirstName"
-                            placeholder="Jawaban" name="deskripsi" required autofocus value = "{{ old('deskripsi') }}">
+                        <input type="text" class="form-control form-control-user" id="uraian_kriteria4"
+                            placeholder="Jawaban" name="uraian_kriteria4" required autofocus value = "{{ old('uraian_kriteria4') }}">
                         </td>
                         <td> <input type="radio" id="level_terpilih_eksternal"
                              name="level_terpilih_eksternal"  value = "4"></td>
@@ -94,15 +95,14 @@
                     <tr>
                         <td>5</td>
                         <td>{{ $indikator->kriteria5}}
-                        <input type="text" class="form-control form-control-user" id="exampleFirstName"
-                            placeholder="Jawaban" name="kriteria5" value = "{{ old('kriteria5') }}">
+                        <input type="text" class="form-control form-control-user" id="uraian_kriteria5"
+                            placeholder="Jawaban" name="uraian_kriteria5" required autofocus value = "{{ old('uraian_kriteria5') }}">
                         </td>
                         <td> <input type="radio" id="level_terpilih_eksternal"
                              name="level_terpilih_eksternal" value = "5"></td>
                         <td> <input type="radio" id="level_terpilih_internal"
                              name="level_terpilih_internal" value = "5"></td>
                     </tr>
-                    
                 </tbody>
             </table>
             <hr>
@@ -110,7 +110,7 @@
             <button type="submit" class="btn btn-primary">Submit</button>
           </div>
         </div>
-
+        </form>
     </div>
     </div>
 </div>
