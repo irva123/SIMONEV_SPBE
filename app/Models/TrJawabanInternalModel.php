@@ -20,9 +20,9 @@ class TrJawabanInternalModel extends Model
         'uraian_kriteria4',
         'uraian_kriteria5',
         'level_terpilih_eksternal',
-        'uraian_ekternal',
+        'uraian_eksternal',
         'id_user_internal',
-        'id_user_ekternal',
+        'id_user_eksternal',
 
     ];
 

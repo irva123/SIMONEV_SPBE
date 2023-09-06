@@ -35,8 +35,14 @@
         <div id="myDIV3">
         <p class=" mb-0 text-gray-800">{!!  ( $indikator->penjelasan_indikator ) !!}</p>
     </div>
-    <form method="post" action="/penilaian" enctype= multipart/form-data>
+    @if ($errors->any())
+     @foreach ($errors->all() as $error)
+         <div>{{$error}}</div>
+     @endforeach
+ @endif
+    <form method="post" action="{{ route('jawaban.save') }}" enctype= multipart/form-data>
     @csrf
+    <input name="id_indikator" type="hidden" value="{{ $indikator->id }}">
         <div class="table-responsive">
             <table class="table" id="dataTable" width="100%" cellspacing="0">
             <tr>
@@ -106,12 +112,18 @@
                 </tbody>
             </table>
             <hr>
+            <div class="form-group row">
+                            <label for="name" class="col-md-1 col-form-label text-md-right">{{ __('File') }}</label>
+            <div class="mb-3 col-md-6">
+                    <input  type="file" id="nama_file" 
+                    name="nama_file[]" required multiple class="form-control" required autofocus value = "{{ old('nama_file') }}">
+                </div>
+                </div>
             <div class="text-center mb-5">
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary">Unggah dan Simpan</button>
           </div>
-        </div>
-        </form>
-    </div>
+        </div> 
     </div>
 </div>
+</form>
 @endsection

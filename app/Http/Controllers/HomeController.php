@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Charts\MonthlyUsersChart;
 
 class HomeController extends Controller
 {
@@ -21,8 +22,8 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(MonthlyUsersChart $chart)
     {
-        return view('dashboard');
+        return view('dashboard', ['chart' => $chart->build()]);
     }
 }

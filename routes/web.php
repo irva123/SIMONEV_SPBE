@@ -54,7 +54,8 @@ Route::resource('/opd', OpdController::class)->middleware('auth');
 Route::resource('/penilaian', PenilaianMandiriController::class);
 Route::post('/penilaian/create/{IndikatorModel}', [PenilaianMandiriController::class, 'jawaban']);
 Route::get('/penilaian2', [App\Http\Controllers\PenilaianMandiriController::class, 'index2']);
-Route::post('/jawaban', [PenilaianMandiriController::class, 'jawaban']);
+Route::post('/jawaban2', [PenilaianMandiriController::class, 'jawaban']);
+Route::post('/jawaban', [PenilaianMandiriController::class, 'jawaban'])->name('jawaban.save');
 Route::get('logout', function ()
 {
     auth()->logout();

@@ -86,15 +86,17 @@
 </div>
 </div>
 
-<div class="card-body pt-4">
-          <ul class="progress-indicator" style="font-size: 120%!important">
-                        <li class="" id="li_isi"><span class="bubble"></span>Registrasi <br><small id="sm_isi">(selesai)</small><br>
-              <p class="font-size-xs">2023-06-26 s/d 2023-07-08</p></li>
-              <li class="" id="li_eval"><span class="bubble"></span>Pengajuan <br><small id="sm_eval">(Selesai)</small><br>
-                <p class="font-size-xs">2023-06-26 s/d 2023-07-14</p></li>
-                <li class="danger" id="li_perb"><span class="bubble"></span>Tutup <br><small id="sm_perb">(Tutup)</small></li>
-              </ul>
-            </div>
+
+<div class="container px-0 mx-0 mb-2">
+
+    <div class="p-6 m-20 bg-white rounded shadow">
+        {!! $chart->container() !!}
+    </div>
+
+</div>
+<script src="{{ $chart->cdn() }}"></script>
+
+{{ $chart->script() }}
 
 <!-- Content Row -->
 

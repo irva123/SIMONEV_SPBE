@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class TrDataDukungModel extends Model
 {
     use HasFactory;
+    public $timestamps = true;
     protected $table = 'tr_data_dukung';
     protected $guarded = ['id'];
     protected $fillable = [

@@ -8,6 +8,8 @@ use App\Models\PeriodeModel;
 use App\Models\ProgressModel;
 use App\Models\IndikatorModel;
 use App\Models\DomainModel;
+use App\Models\TrJawabanInternalModel;
+use App\Models\TrDataDukungModel;
 use App\Models\AspekModel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -23,19 +25,27 @@ class PenilaianMandiriController extends Controller
      */
     public function index(Request $request)
     {
-    //     dd($request->input('tahun'));
-    $periodeAktif = PeriodeModel::paginate(10);
-        return view('tampilan_opd.penilaian1', ['periodeaktif'=>$periodeAktif]);
-        $periodeAktif = PeriodeModel::query();
-        $pagination = 10;
-        $periodeAktif->when($request->tahun, function ($query) use ($request) {
-            return $query->where($request->tahun);
-        });
-        // $filtertahun = (!empty($request->input('tahun')) ? $request->input('tahun') : date("Y"));
+    // //     dd($request->input('tahun'));
+    // $periodeAktif = PeriodeModel::paginate(10);
+    // return view('tampilan_opd.penilaian1', ['periodeaktif'=>$periodeAktif]);
+    //     $periodeAktif = PeriodeModel::Query();
+    $pagination = 10;
+    //     $periodeAktif->when($request->id, function ($query) use ($request) {
+    //         return $query->where('id', $request('id'))->get();
+    //     });
+        $periode = PeriodeModel::get();
+        //$periodeaktif = DB::table('periode')->where('status', '1')->value('id');
+
+    //     $periodeaktif = PeriodeModel::where( function($query) use($request){
+    //         return $request->tahun ?
+    //                $query->from('periode')->where('tahun',$request->tahun) : '';
+    //    })->get();
+        $filtertahun = (!empty($request->input('tahun')) ? $request->input('tahun') : date("Y"));
         // $periode = PeriodeModel::all();
-        // $periodeAktif=PeriodeModel::where('tahun', $filtertahun)->get();
+        $periodeaktif=PeriodeModel::where('tahun', $filtertahun)->get();
         //$progress = DB::table('progress')->Join('periode', 'progress.id_periode', '=', 'periode.id')->where('periode.status', '1')->select('progress.*', 'periode.tahun')->OrderBy('progress.created_at', 'desc')->paginate($pagination);
-        return view('tampilan_opd.penilaian1', [ 'periodeaktif'=>$periodeAktif])->with('i', ($request->input('page',1)-1)* $pagination);
+        return view('tampilan_opd.penilaian1', compact('periode','periodeaktif'))
+        ->with('i', ($request->input('page',1)-1)* $pagination);
     }
 
     /**
@@ -65,43 +75,7 @@ class PenilaianMandiriController extends Controller
      */
     public function store(Request $request)
     {
-        $arrayValidation = [
-            'id_periode' => 'required|String',
-            'id_indikator' => 'required|String',
-            'level_terpilih_internal' => 'required|numeric',
-            'level_terpilih_eksternal' => 'numeric',
-            'uraian_kriteria1' => 'required|String',
-            'uraian_kriteria2' => 'required|String',
-            'uraian_kriteria3' => 'required|String',
-            'uraian_kriteria4' => 'required|String',
-            'uraian_kriteria5' => 'required|String',
-            'id_user_internal' => 'required|String',
-            'id_user_eksternal' => 'String',
-            'uraian_eksternal' => 'String',
-        ];
 
-        $validateData = $request->validate($arrayValidation);
-        $periode_aktif = DB::table('periode')->where('status', '1')->value('id');
-
-        //data insert isian utama
-        $dataInsert = [
-            'id_periode' => $periode_aktif,
-            'id_indikator' => Auth::id(),
-            'level_terpilih_internal' => $request->input('level_terpilih_internal'),
-            'level_terpilih_eksternal' => $request->input('level_terpilih_eksternal'),
-            'uraian_kriteria1' => $request->input('uraian_kriteria1'),
-            'uraian_kriteria2' => $request->input('uraian_kriteria2'),
-            'uraian_kriteria3' => $request->input('uraian_kriteria3'),
-            'uraian_kriteria4' => $request->input('uraian_kriteria4'),
-            'uraian_kriteria5' => $request->input('uraian_kriteria5'),
-            'id_user_internal' => Auth::id(),
-            'id_user_eksternal' => Auth::id(),
-            'uraian_eksternal' => $request->input('uraian_eksternal'),
-        ];
-
-        $TrJawabanInternal = TrJawabanInternalModel::create ($dataInsert);
-        dd($TrJawabanInternal);
-        return redirect()->route('penilaian.index')->with('success', 'Data berhasil disimpan');
     }
 
     /**
@@ -136,9 +110,9 @@ class PenilaianMandiriController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateJawabanInternalRequest $request, TrJawabanInternalModel $TrJawabanInternal)
+    public function update(Request $request, $id)
     {
-        
+       
     }
 
     /**
@@ -152,9 +126,67 @@ class PenilaianMandiriController extends Controller
         //
     }
 
-    public function jawaban(Request $request, $id)
+    public function jawaban(Request $request)
     {
-        $indikator2 = IndikatorModel::find($id);
-        return redirect('penilaian/create');
+        $arrayValidation = [
+            'id_indikator' => 'required|String',
+            'level_terpilih_internal' => 'required|numeric',
+            'level_terpilih_eksternal' => 'numeric',
+            'uraian_kriteria1' => 'required|String',
+            'uraian_kriteria2' => 'required|String',
+            'uraian_kriteria3' => 'required|String',
+            'uraian_kriteria4' => 'required|String',
+            'uraian_kriteria5' => 'required|String',
+        ];
+
+        $validateData = $request->validate($arrayValidation);
+        $periode_aktif = DB::table('periode')->where('status', '1')->value('id');
+
+        //data insert isian utama
+        $dataInsert = [
+            'id_periode' => $periode_aktif,
+            'id_indikator' => $request->input('id_indikator'),
+            'level_terpilih_internal' => $request->input('level_terpilih_internal'),
+            'level_terpilih_eksternal' => $request->input('level_terpilih_eksternal'),
+            'uraian_kriteria1' => $request->input('uraian_kriteria1'),
+            'uraian_kriteria2' => $request->input('uraian_kriteria2'),
+            'uraian_kriteria3' => $request->input('uraian_kriteria3'),
+            'uraian_kriteria4' => $request->input('uraian_kriteria4'),
+            'uraian_kriteria5' => $request->input('uraian_kriteria5'),
+            'uraian_eksternal' => '',
+            'id_user_internal' => Auth::id(),
+            'id_user_eksternal' => Auth::id(),
+        ];
+
+        $TrJawabanInternal = TrJawabanInternalModel::insertGetId ($dataInsert);
+        
+        $arrayValidation2 = [
+            'id_jawaban' => 'String',
+            'nama_file' => 'required',
+        ];
+
+        $validateData = $request->validate($arrayValidation2);
+        //$lastId = $TrJawabanInternal->value('id');
+        if ($request->hasfile('nama_file')) { 
+            $files = [];
+            foreach ($request->file('nama_file') as $file) {
+                if ($file->isValid()) {
+                    $filename = round(microtime(true) * 1000).'-'.str_replace(' ','-',$file->getClientOriginalName());
+                    $file->move(public_path('images'), $filename);                    
+                    $files[] = [
+                        'id_jawaban'=>$TrJawabanInternal,
+                        'nama_file' => $filename,
+                        'created_at' => \Carbon\Carbon::now(),
+                        'updated_at' => \Carbon\Carbon::now(),
+                    ];
+                }
+            }
+       
+
+        $TrDataDukung = TrDataDukungModel::insert ($files);
+       //dd($TrDataDukung);
+
+        return redirect()->route('penilaian.index')->with('success', 'Data berhasil disimpan');
     }
+}
 }

@@ -12,18 +12,23 @@
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-bordered" width="100%" cellspacing="0">
-            <form action="/filter" method="get">
+            <form action="/penilaian" method="get">
                             @csrf
-            <div class="form-group">
+            <div class='row mb-3'>
+            <div class="col-sm-3">
                 <select name="tahun" id="tahun" class="custom-select" >
-                <option value="2022" selected="{{isset($_GET['tahun']) && $_GET['tahun'] == '2022'}}">2022</option>
-                <option value="2023" selected="{{isset($_GET['tahun']) && $_GET['tahun'] == '2023'}}">2023</option>
+                @foreach ($periode as $periode)
+                @if(old('tahun') == $periode->tahun)
+                <option autofocus value="{{ $periode->tahun }}" selected>{{ $periode->tahun }}</option>
+                @else 
+                <option value="{{ $periode->tahun }}">{{ $periode->tahun }}</option>
+                @endif
+                @endforeach                  
                 </select>
                 </div>
-                <div class="col-sm-3">
-                                    <button type="submit" class="btn btn-primary mt-4">Search</button>
-                                </div>
-                                </form>
+                <button type="submit" class="btn btn-primary">Filter</button>
+                </div>
+                </form>
                 <thead>
                         <th>No</th>
                         <th>Tahun</th>
@@ -32,18 +37,33 @@
                         <th>Aksi</th>
                 </thead>
                 <tbody>
-                     @foreach ($periodeaktif as $list)
-                        <td>1</td>
+                @if ($periodeaktif->count() > 0)
+                @foreach ($periodeaktif as $list)
+                <tr>
+                        <td>{{ ++$i }}</td>
                         <td>{{ $list->tahun}}</td>
                         <td>{{ $list->selesai}}</td>
-                        <td>blas </td>
+                        <td><div class="row no-gutters align-items-center">
+                                                <div class="col-auto">
+                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="progress progress-sm mr-2">
+                                                        <div class="progress-bar bg-info" role="progressbar"
+                                                            style="width: 50%" aria-valuenow="50" aria-valuemin="0"
+                                                            aria-valuemax="100"></div>
+                                                    </div>
+                                                </div>
+                                            </div></td>
                         <td>
                         <a href="/penilaian/create" class="btn btn-primary  btn-sm" data-bs-toggle="tooltip" > Kerjakan
                         </a>
                         <a href="/" class="btn btn-primary  btn-sm" data-bs-toggle="tooltip" > Lihat
                         </a>
                         </td>
+                        </tr>
                     @endforeach
+                    @endif
                 </tbody>
             </table>
         </div>
