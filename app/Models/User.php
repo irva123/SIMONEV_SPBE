@@ -17,10 +17,19 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    use HasFactory;
+    protected $table = 'users';
+    protected $guarded = ['id'];
     protected $fillable = [
-        'name',
-        'email',
+        'username',
         'password',
+        'nama_lengkap',
+        'nip', 
+        'email',
+        'no_hp',
+        'id_role',
+        'id_opd'
+        
     ];
 
     /**
@@ -41,4 +50,25 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function progress()
+    {
+        return $this->hasMany(ProgressModel::class, 'id_users');
+    }
+
+    public function periode()
+    {
+        return $this->hasMany(PeriodeModel::class, 'id_users');
+    }
+    public function opd()
+    {
+        return $this->belongsTo(OpdModel::class, 'id_opd');
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(RoleModel::class, 'id_role');
+    }
+
+       
 }

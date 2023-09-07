@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('nip');
             $table->string('email')->unique();
             $table->string('no_hp');
+            $table->unsignedBigInteger('id_opd');
             $table->timestamps();
         });
     }
