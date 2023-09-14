@@ -43,18 +43,24 @@
                         <td>{{ ++$i }}</td>
                         <td>{{ $list->tahun}}</td>
                         <td>{{ $list->selesai}}</td>
-                        <td><div class="row no-gutters align-items-center">
-                                                <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="progress progress-sm mr-2">
-                                                        <div class="progress-bar bg-info" role="progressbar"
-                                                            style="width: 50%" aria-valuenow="50" aria-valuemin="0"
-                                                            aria-valuemax="100"></div>
-                                                    </div>
-                                                </div>
-                                            </div></td>
+                        <td>
+                            
+                            <div class= "text-right">
+                                 <div class=" mb-0 mr-3 font-weight-bold text-gray-800">{{ round($progresJawaban,2) }}%</div>
+                            </div>
+                            <div class="row no-gutters align-items-center">
+                                <div class="col">
+                                    <div class="progress progress-sm mr-2">
+                                        <div class="progress-bar bg-info" role="progressbar"
+                                             style="width: {{ $progresJawaban; }}%" aria-valuenow="50" aria-valuemin="0"
+                                             aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-center">
+                                <div class=" mb-0 mr-3 font-weight-bold text-gray-800">{{ $jumlahTerisi }} dari {{ $jumlahtotal }}</div>
+                                </div>
+                        </td>
                         <td>
                         <a href="/penilaian/create" class="btn btn-primary  btn-sm" data-bs-toggle="tooltip" > Kerjakan
                         </a>

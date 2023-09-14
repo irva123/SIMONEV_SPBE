@@ -43,8 +43,23 @@ class PenilaianMandiriController extends Controller
         $filtertahun = (!empty($request->input('tahun')) ? $request->input('tahun') : date("Y"));
         // $periode = PeriodeModel::all();
         $periodeaktif=PeriodeModel::where('tahun', $filtertahun)->get();
+
+        $indikatorOPD = indikatorModel::where('id_opd', Auth::user()->id_opd)->get();
+        // dd(Auth::user()->id_opd);
+        $idIndikatorList = array();
+        $jumlahtotal=0;
+        foreach ($indikatorOPD as $indikatorOPD2) {
+            $idIndikatorList[] = $indikatorOPD2->id;
+            $jumlahtotal++;
+        }
+
+        // dd($idIndikatorList);
+        $jumlahTerisi = TrJawabanInternalModel::whereIn('id_indikator', $idIndikatorList)->count();
+        $progresJawaban = $jumlahTerisi / $jumlahtotal;
+
+        // dd($progresJawaban);
         //$progress = DB::table('progress')->Join('periode', 'progress.id_periode', '=', 'periode.id')->where('periode.status', '1')->select('progress.*', 'periode.tahun')->OrderBy('progress.created_at', 'desc')->paginate($pagination);
-        return view('tampilan_opd.penilaian1', compact('periode','periodeaktif'))
+        return view('tampilan_opd.penilaian1', compact('periode','periodeaktif', 'progresJawaban', 'jumlahTerisi',  'jumlahtotal'))
         ->with('i', ($request->input('page',1)-1)* $pagination);
     }
 
@@ -95,13 +110,25 @@ class PenilaianMandiriController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(IndikatorModel $indikator, $id)
+    public function edit(IndikatorModel $indikator, $id, TrJawabanInternalModel $dataJawaban, TrDataDukungModel $dataDukung)
     {
-        $indikator = IndikatorModel::find($id);
-        return view('tampilan_opd.penilaian3',['indikator'=>$indikator]);
+        // $dataJawaban = DB::table('tr_jawaban_internal')
+        // ->join('indikator', 'tr_jawaban_internal.id_indikator', '=', 'indikator.id')
+        // ->where("tr_jawaban_internal.id_indikator", "=", $dataJawaban->id_indikator)
+        // ->select('tr_jawaban_internal.*', 'indikator.nama_indikator')
+        // ->get();
 
-        
+        // dd($id);
+
+        $dataJawaban = TrJawabanInternalModel::where('id_indikator', $id)->get()->first();
+        //dd($dataJawaban);
+        $dataDukung = TrDataDukungModel::where('id_jawaban', $id)->get()->first();
+        //dd($dataDukung);
+        $indikator = IndikatorModel::find($id);
+        return view('tampilan_opd.penilaian3',['indikator'=>$indikator, 'dataJawaban'=>$dataJawaban, 'dataDukung'=>$dataDukung]);
+    
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -158,8 +185,26 @@ class PenilaianMandiriController extends Controller
             'id_user_eksternal' => Auth::id(),
         ];
 
-        $TrJawabanInternal = TrJawabanInternalModel::insertGetId ($dataInsert);
-        
+        $dataJawaban = TrJawabanInternalModel::where('id');
+        if(!empty($dataJawaban)){
+            $dataUpdate = [
+                'id_periode' => $periode_aktif,
+                'id_indikator' => $request->input('id_indikator'),
+                'level_terpilih_internal' => $request->input('level_terpilih_internal'),
+                'level_terpilih_eksternal' => $request->input('level_terpilih_eksternal'),
+                'uraian_kriteria1' => $request->input('uraian_kriteria1'),
+                'uraian_kriteria2' => $request->input('uraian_kriteria2'),
+                'uraian_kriteria3' => $request->input('uraian_kriteria3'),
+                'uraian_kriteria4' => $request->input('uraian_kriteria4'),
+                'uraian_kriteria5' => $request->input('uraian_kriteria5'),
+                'uraian_eksternal' => '',
+                'id_user_internal' => Auth::id(),
+                'id_user_eksternal' => Auth::id(),
+            ];
+            $tr_jawaban_internal->update($dataUpdate);
+            return redirect()->route('tampilan_opd.penilaian1')->with('success', 'data berhasil disimpan!');
+        }    
+
         $arrayValidation2 = [
             'id_jawaban' => 'String',
             'nama_file' => 'required',
@@ -184,9 +229,12 @@ class PenilaianMandiriController extends Controller
        
 
         $TrDataDukung = TrDataDukungModel::insert ($files);
-       //dd($TrDataDukung);
 
         return redirect()->route('penilaian.index')->with('success', 'Data berhasil disimpan');
-    }
+    
+            
+        }else{
+            $TrJawabanInternal = TrJawabanInternalModel::insertGetId ($dataInsert);
 }
+    }
 }

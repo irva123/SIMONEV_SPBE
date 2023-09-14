@@ -40,9 +40,11 @@
          <div>{{$error}}</div>
      @endforeach
  @endif
-    <form method="post" action="{{ route('jawaban.save') }}" enctype= multipart/form-data>
+    
+    <form method="post" action="{{ route('penilaian.update', $indikator->id) }}" enctype= multipart/form-data>
+  @method ('PUT')
     @csrf
-    <input name="id_indikator" type="hidden" value="{{ $indikator->id }}">
+    <input name="id_indikator" type="hidden" value="{{ (!empty($indikator->id) ? $indikator->id: '') }}">
         <div class="table-responsive">
             <table class="table" id="dataTable" width="100%" cellspacing="0">
             <tr>
@@ -58,72 +60,106 @@
                         <td>1</td>
                         <td>{{ $indikator->kriteria1}}
                         <input type="text" class="form-control form-control-user" id="uraian_kriteria1"
-                            placeholder="Jawaban" name="uraian_kriteria1" required autofocus value = "{{ old('uraian_kriteria1') }}">
+                        placeholder="Jawaban" name="uraian_kriteria1" value = "{{ (!empty($dataJawaban->uraian_kriteria1) ? $dataJawaban->uraian_kriteria1 : '') }}" required>
+                        @error('uraian_kriteria1')
+                        <span class="invalid-feedback" role="alert">
+                          <strong>{{ $message }} </strong>
+                        </span >
+                        @enderror
                         </td>
                         <td> <input type="radio" id="level_terpilih_eksternal"
-                             name="level_terpilih_eksternal" value = "1"></td>
+                             name="level_terpilih_eksternal" value = "1"   {{ ($dataJawaban && $dataJawaban->level_terpilih_eksternal == '1' ? 'checked' : '') }}></td>
                         <td> <input type="radio" id="level_terpilih_internal"
-                             name="level_terpilih_internal" value = "1"></td>
+                             name="level_terpilih_internal" value = "1"  {{ ($dataJawaban && $dataJawaban->level_terpilih_eksternal == '1' ? 'checked' : '') }}</td>
                     </tr>
                     <tr>
                         <td>2</td>
                         <td>{{ $indikator->kriteria2}}
                         <input type="text" class="form-control form-control-user" id="uraian_kriteria2"
-                            placeholder="Jawaban" name="uraian_kriteria2" required autofocus value = "{{ old('uraian_kriteria2') }}">
-                        </td>
+                        placeholder="Jawaban" name="uraian_kriteria2" value = "{{ (!empty($dataJawaban ->uraian_kriteria2) ? $dataJawaban->uraian_kriteria2 : '') }}">
+                        @error('uraian_kriteria2')
+                        <span class="invalid-feedback" role="alert">
+                          <strong>{{ $message }} </strong>
+                        </span >
+                        @enderror
+                            </td>
                         <td> <input type="radio" id="level_terpilih_eksternal"
-                             name="level_terpilih_eksternal" value = "2"></td>
+                             name="level_terpilih_eksternal" value = "2" {{ ($dataJawaban && $dataJawaban->level_terpilih_eksternal == '2' ? 'checked' : '')}}></td>
                         <td> <input type="radio" id="level_terpilih_internal"
-                             name="level_terpilih_internal" value = "2"></td>
+                             name="level_terpilih_internal" value = "2" {{ ($dataJawaban && $dataJawaban->level_terpilih_internal == '2' ? 'checked' : '')}}></td>
                     </tr>
                     <tr>
                         <td>3</td>
                         <td>{{ $indikator->kriteria3}}
                         <input type="text" class="form-control form-control-user" id="uraian_kriteria3"
-                            placeholder="Jawaban" name="uraian_kriteria3" required autofocus value = "{{ old('uraian_kriteria3') }}">
+                        placeholder="Jawaban" name="uraian_kriteria3" value = "{{ (!empty($dataJawaban ->uraian_kriteria3) ? $dataJawaban->uraian_kriteria3 : '') }}">
+                        @error('uraian_kriteria3')
+                        <span class="invalid-feedback" role="alert">
+                          <strong>{{ $message }} </strong>
+                        </span >
+                        @enderror
                         </td>
                         <td> <input type="radio" id="level_terpilih_eksternal"
-                             name="level_terpilih_eksternal" value = "3"></td>
+                             name="level_terpilih_eksternal" value = "3" {{ ($dataJawaban && $dataJawaban->level_terpilih_eksternal == '3' ? 'checked' : '')}}></td>
                         <td> <input type="radio" id="level_terpilih_internal"
-                             name="level_terpilih_internal" value = "3"></td>
+                             name="level_terpilih_internal" value = "3" {{ ($dataJawaban&& $dataJawaban->level_terpilih_internal == '3' ? 'checked' : '')}}></td>
                     </tr>
                     <tr>
                         <td>4</td>
                         <td>{{ $indikator->kriteria4}}
                         <input type="text" class="form-control form-control-user" id="uraian_kriteria4"
-                            placeholder="Jawaban" name="uraian_kriteria4" required autofocus value = "{{ old('uraian_kriteria4') }}">
+                        placeholder="Jawaban" name="uraian_kriteria4" value = "{{ (!empty($dataJawaban ->uraian_kriteria4) ? $dataJawaban->uraian_kriteria4 : '') }}">
+                        @error('uraian_kriteria4')
+                        <span class="invalid-feedback" role="alert">
+                          <strong>{{ $message }} </strong>
+                        </span >
+                        @enderror
                         </td>
                         <td> <input type="radio" id="level_terpilih_eksternal"
-                             name="level_terpilih_eksternal"  value = "4"></td>
+                             name="level_terpilih_eksternal"  value = "4" {{ ($dataJawaban && $dataJawaban->level_terpilih_eksternal == '4' ? 'checked' : '')}}></td>
                         <td> <input type="radio" id="level_terpilih_internal"
-                             name="level_terpilih_internal" value = "4"></td>
+                             name="level_terpilih_internal" value = "4" {{($dataJawaban && $dataJawaban->level_terpilih_internal == '4' ? 'checked' : '') }}></td>
                     </tr>
                     <tr>
                         <td>5</td>
                         <td>{{ $indikator->kriteria5}}
                         <input type="text" class="form-control form-control-user" id="uraian_kriteria5"
-                            placeholder="Jawaban" name="uraian_kriteria5" required autofocus value = "{{ old('uraian_kriteria5') }}">
+                        placeholder="Jawaban" name="uraian_kriteria5" value = "{{ (!empty($dataJawaban->uraian_kriteria5) ? $dataJawaban->uraian_kriteria5 : '') }}">
+                        @error('uraian_kriteria5')
+                        <span class="invalid-feedback" role="alert">
+                          <strong>{{ $message }} </strong>
+                        </span >
+                        @enderror
                         </td>
                         <td> <input type="radio" id="level_terpilih_eksternal"
-                             name="level_terpilih_eksternal" value = "5"></td>
+                             name="level_terpilih_eksternal" value = "5" {{ ($dataJawaban && $dataJawaban->level_terpilih_eksternal == '5' ? 'checked' : '')}}></td>
                         <td> <input type="radio" id="level_terpilih_internal"
-                             name="level_terpilih_internal" value = "5"></td>
+                             name="level_terpilih_internal" value = "5" {{ ($dataJawaban&& $dataJawaban->level_terpilih_internal == '5' ? 'checked' : '')}}></td>
                     </tr>
                 </tbody>
             </table>
             <hr>
-            <div class="form-group row">
-                            <label for="name" class="col-md-1 col-form-label text-md-right">{{ __('File') }}</label>
-            <div class="mb-3 col-md-6">
-                    <input  type="file" id="nama_file" 
-                    name="nama_file[]" required multiple class="form-control" required autofocus value = "{{ old('nama_file') }}">
-                </div>
-                </div>
-            <div class="text-center mb-5">
+            <div class="input-group hdtuto control-group lst increment" >
+      <input type="file" name="nama_file[]" class="myfrm form-control">
+      <div class="input-group-btn"> 
+        <button class="btn btn-success" type="button"><i class="fldemo glyphicon glyphicon-plus"></i>Add</button>
+      </div>
+    </div>
+    <div class="clone hide">
+      <div class="hdtuto control-group lst input-group" style="margin-top:10px">
+        <input type="file" name="nama_file[]" class="myfrm form-control">
+        <div class="input-group-btn"> 
+          <button class="btn btn-danger" type="button"><i class="fldemo glyphicon glyphicon-remove"></i> Remove</button>
+        </div>
+      </div>
+    </div>
+    <div class="text-center mb-5 mt-5">
             <button type="submit" class="btn btn-primary">Unggah dan Simpan</button>
           </div>
         </div> 
     </div>
 </div>
 </form>
+
+            
 @endsection
