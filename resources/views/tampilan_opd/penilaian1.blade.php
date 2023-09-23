@@ -5,10 +5,12 @@
 <div class="container-fluid">
 
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800">Tugas Penilaian Mandiri</h1>
 
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
+<div class="card-header py-1">
+    <h5 class="h5 mb-2 mt-3 text-gray-800">Tugas Penilaian Mandiri</h5>
+</div>
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-bordered" width="100%" cellspacing="0">

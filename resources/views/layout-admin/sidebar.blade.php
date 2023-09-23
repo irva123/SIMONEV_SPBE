@@ -79,13 +79,12 @@
 
  <!-- Nav Item - Utilities Collapse Menu -->
  <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                    aria-expanded="true" aria-controls="collapseUtilities">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                    aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-wrench"></i>
                     <span>Kebijakan</span>
                 </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="/domain">Domain</a>
                         <a class="collapse-item" href="/aspek">Aspek</a>
@@ -95,9 +94,15 @@
             </li>
 
   <li class="nav-item">
-    <a class="nav-link" href="/progress">
+    <a class="nav-link" href="/user">
       <i class="fa fa-calendar"></i>
       <span>Users</span></a>
+  </li>
+
+  <li class="nav-item">
+    <a class="nav-link" href="/penilaian_eks">
+      <i class="fa fa-calendar"></i>
+      <span>Penilaian Mandiri</span></a>
   </li>
 @endcan
 

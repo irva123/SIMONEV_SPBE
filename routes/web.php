@@ -10,6 +10,7 @@ use App\Http\Controllers\IndikatorController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\OpdController;
 use App\Http\Controllers\PenilaianMandiriController;
+use App\Http\Controllers\PenilaianEksternalController;
 use App\Http\Controllers\Auth\LoginController;
 
 /*
@@ -52,10 +53,15 @@ Route::resource('/indikator', IndikatorController::class)->middleware('auth');
 Route::resource('/user', UserController::class)->middleware('auth');
 Route::resource('/opd', OpdController::class)->middleware('auth');
 Route::resource('/penilaian', PenilaianMandiriController::class);
-Route::post('/penilaian/create/{IndikatorModel}', [PenilaianMandiriController::class, 'jawaban']);
+Route::resource('/penilaian_eks', PenilaianEksternalController::class);
+//Route::get('/penilaian_eks2/{id}', [App\Http\Controllers\PenilaianEksternalController::class, 'index2']);
+Route::get('/penilaian_eks2/{id}', [PenilaianEksternalController::class, 'index2'])->name('penilaian_eks2.index2');
 Route::get('/penilaian2', [App\Http\Controllers\PenilaianMandiriController::class, 'index2']);
-Route::post('/jawaban2', [PenilaianMandiriController::class, 'jawaban']);
+//Route::post('/jawaban2', [PenilaianMandiriController::class, 'jawaban']);
+//Route::put('/jawaban/{id}', [PenilaianMandiriController::class, 'jawaban'])->name('jawaban.save');
 Route::post('/jawaban', [PenilaianMandiriController::class, 'jawaban'])->name('jawaban.save');
+Route::post('/jawaban2', [PenilaianEksternalController::class, 'jawaban2'])->name('jawaban2.save');
+Route::delete('/jawaban/{id}', 'JawabanController@destroy')->name('jawaban.destroy');
 Route::get('logout', function ()
 {
     auth()->logout();

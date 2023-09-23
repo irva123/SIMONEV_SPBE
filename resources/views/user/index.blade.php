@@ -9,6 +9,7 @@
 
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
+@can('is_admin')
     <div class="card-header py-3">
         {{-- TOMBOL TAMBAH --}}
             <a href="user/create" class="btn btn-primary btn-icon-split">
@@ -18,6 +19,7 @@
                  <span class="text">Tambah User</span>
             </a>
     </div>
+    @endcan
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -27,7 +29,9 @@
                         <th>Username</th>
                         <th>Nama</th>
                         <th>Role User</th>
+                        @can('is_admin')
                         <th>Aksi</th>
+                        @endcan
                     </tr>
                 </thead>
                 <tbody>
@@ -44,6 +48,7 @@
                         {{ $users->nama_role}} 
                         @endif
                         </td>
+                        @can('is_admin')
                         <td>
                         <form action="{{ route('user.destroy', $users->id) }}" method="POST"  data-bs-toggle="tooltip" >
                         @method('DELETE')
@@ -59,6 +64,7 @@
                         </a>
                         </form>
                         </td>
+                        @endcan
                     </tr>
                     
                     @endforeach

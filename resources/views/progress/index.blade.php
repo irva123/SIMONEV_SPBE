@@ -8,8 +8,8 @@
 
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
-    <div class="card-header py-3">
-    <h5 class="h5 mb-3 text-gray-800">Tabel Progress Periode {{ ($progress2->status == '1') ? $progress2->tahun : '' }}</h5>
+    <div class="card-header py-1">
+    <h5 class="h5 mb-2 mt-3 text-gray-800">Tabel Progress @can('is_admin') Periode {{ ($progress2->status == '1') ? $progress2->tahun : '' }} @endcan</h5>
         {{-- TOMBOL TAMBAH --}}
         @can('is_admin')
             <a href="progress/create" class="btn btn-primary btn-icon-split">
